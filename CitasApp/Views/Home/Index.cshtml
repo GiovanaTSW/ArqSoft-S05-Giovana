@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div style="background: linear-gradient(135deg, #3a9ea5 0%, #2b7a80 100%); border-radius: 16px; padding: 60px 40px; text-align: center; margin-bottom: 40px;">
+    <h1 style="color: white; font-size: 2.8rem; font-weight: 700; margin-bottom: 10px;">CitasApp</h1>
+    <p style="color: rgba(255,255,255,0.85); font-size: 1.2rem; margin: 0;">Sistema de gestión de citas médicas</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 36px 28px; text-align: center; height: 100%;">
+            <div style="background: #e8f7f8; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <span style="color: #2b7a80; font-size: 1.8rem; font-weight: 700;">P</span>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 10px; color: #2b7a80;">Pacientes</h4>
+            <p style="color: #6c757d; margin-bottom: 24px;">Consulta, agrega, edita y elimina los pacientes registrados en el sistema.</p>
+            <a asp-controller="Paciente" asp-action="Index" style="background: #3a9ea5; border: none; color: white; border-radius: 8px; padding: 10px 28px; font-weight: 600; text-decoration: none;">
+                Ver Pacientes
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 36px 28px; text-align: center; height: 100%;">
+            <div style="background: #e8f7f8; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <span style="color: #2b7a80; font-size: 1.8rem; font-weight: 700;">M</span>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 10px; color: #2b7a80;">Médicos</h4>
+            <p style="color: #6c757d; margin-bottom: 24px;">Consulta, agrega, edita y elimina los médicos disponibles en la clínica.</p>
+            <a asp-controller="Medico" asp-action="Index" style="background: #3a9ea5; border: none; color: white; border-radius: 8px; padding: 10px 28px; font-weight: 600; text-decoration: none;">
+                Ver Médicos
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 36px 28px; text-align: center; height: 100%;">
+            <div style="background: #e8f7f8; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <span style="color: #2b7a80; font-size: 1.8rem; font-weight: 700;">C</span>
+            </div>
+            <h4 style="font-weight: 700; margin-bottom: 10px; color: #2b7a80;">Citas</h4>
+            <p style="color: #6c757d; margin-bottom: 24px;">Consulta la agenda completa y gestiona todas las citas médicas programadas.</p>
+            <a asp-controller="Cita" asp-action="Index" style="background: #3a9ea5; border: none; color: white; border-radius: 8px; padding: 10px 28px; font-weight: 600; text-decoration: none;">
+                Ver Citas
+            </a>
+        </div>
+    </div>
 </div>
