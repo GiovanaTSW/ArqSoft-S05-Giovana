@@ -26,12 +26,5 @@
     "Apellido": "Romero",
     "Email": "edith@gmail.com",
     "Telefono": "555-0004"
-  },
-  {
-    "Id": 5,
-    "Nombre": "--",
-    "Apellido": "--",
-    "Email": "--",
-    "Telefono": "--"
   }
 ]

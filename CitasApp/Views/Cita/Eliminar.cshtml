@@ -1,0 +1,24 @@
+﻿@model CitasApp.Models.Cita
+@using CitasApp.Models
+
+@{
+    var pacientes = ViewBag.Pacientes as List<Paciente>;
+    var medicos = ViewBag.Medicos as List<Medico>;
+    var paciente = pacientes?.FirstOrDefault(p => p.Id == Model.PacienteId);
+    var medico = medicos?.FirstOrDefault(m => m.Id == Model.MedicoId);
+}
+
+<h1>¿Eliminar cita?</h1>
+<p><strong>Paciente:</strong> @(paciente != null ? $"{paciente.Nombre} {paciente.Apellido}" : "—")</p>
+<p><strong>Médico:</strong> @(medico != null ? $"{medico.Nombre} {medico.Apellido}" : "—")</p>
+<p><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")</p>
+<p><strong>Hora:</strong> @Model.Hora.ToString("HH:mm")</p>
+<p><strong>Motivo:</strong> @Model.Motivo</p>
+<p><strong>Estado:</strong> @Model.Estado</p>
+
+<form asp-controller="Cita" asp-action="Eliminar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Sí, eliminar</button>
+    <a asp-action="Index">← Cancelar</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">← Volver al menú</a>
+</form>

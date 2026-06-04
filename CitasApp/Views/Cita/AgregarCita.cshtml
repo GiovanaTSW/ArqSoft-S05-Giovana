@@ -1,0 +1,54 @@
+﻿@model CitasApp.Models.Cita
+@using CitasApp.Models
+
+@{
+    var pacientes = ViewBag.Pacientes as List<Paciente>;
+    var medicos = ViewBag.Medicos as List<Medico>;
+}
+
+<h1>Agregar nueva cita</h1>
+
+<form asp-controller="Cita" asp-action="AgregarCita" method="post" style="max-width:400px">
+    <div>
+        <label asp-for="PacienteId">Paciente</label>
+        <select asp-for="PacienteId">
+            @foreach (var p in pacientes!)
+            {
+                <option value="@p.Id">@p.Nombre @p.Apellido</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label asp-for="MedicoId">Médico</label>
+        <select asp-for="MedicoId">
+            @foreach (var m in medicos!)
+            {
+                <option value="@m.Id">@m.Nombre @m.Apellido</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label asp-for="Fecha">Fecha</label>
+        <input asp-for="Fecha" type="date" />
+    </div>
+    <div>
+        <label asp-for="Hora">Hora</label>
+        <input asp-for="Hora" type="time" />
+    </div>
+    <div>
+        <label asp-for="Motivo">Motivo</label>
+        <input asp-for="Motivo" />
+    </div>
+    <div>
+        <label asp-for="Estado">Estado</label>
+        <select asp-for="Estado">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+    </div>
+    <br />
+    <button type="submit">Guardar</button>
+    <a asp-action="Index">← Cancelar</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">← Volver al menú</a>
+</form>

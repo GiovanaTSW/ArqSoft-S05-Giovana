@@ -7,6 +7,10 @@
 }
 
 <h1>Agenda de citas</h1>
+<a asp-action="AgregarCita" class="btn btn-primary">+ Agregar nueva cita</a>
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">← Volver al menú</a>
+<br />
+<br />
 <table border="1" cellpadding="8">
     <tr>
         <th>Fecha</th>
@@ -15,6 +19,8 @@
         <th>Médico</th>
         <th>Motivo</th>
         <th>Estado</th>
+        <th></th>
+        <th></th>
     </tr>
     @foreach (var c in Model)
     {
@@ -27,6 +33,8 @@
             <td>@(medico != null ? $"{medico.Nombre} {medico.Apellido}" : "—")</td>
             <td>@c.Motivo</td>
             <td>@c.Estado</td>
+            <td><a asp-action="Editar" asp-route-id="@c.Id" class="btn btn-warning">Editar</a></td>
+            <td><a asp-action="Eliminar" asp-route-id="@c.Id" class="btn btn-danger">Eliminar</a></td>
         </tr>
     }
 </table>
