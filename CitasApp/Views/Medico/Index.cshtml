@@ -1,26 +1,56 @@
 ﻿@model List<CitasApp.Models.Medico>
 
-<h1>Médicos disponibles</h1>
-<a asp-action="AgregarMedico" class="btn btn-primary">+ Agregar nuevo médico</a>
-<a asp-controller="Home" asp-action="Index" class="btn btn-primary">← Volver al menú</a>
-<br />
-<br />
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Nombre</th>
-        <th>Especialidad</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    @foreach (var m in Model)
-    {
-        <tr>
-            <td>@m.Nombre @m.Apellido</td>
-            <td>@m.Especialidad</td>
-            <td><a asp-action="Detalle" asp-route-id="@m.Id">Ver detalle</a></td>
-            <td><a asp-action="Editar" asp-route-id="@m.Id" class="btn btn-warning">Editar</a></td>
-            <td><a asp-action="Eliminar" asp-route-id="@m.Id" class="btn btn-danger">Eliminar</a></td>
-        </tr>
-    }
-</table>
+<div style="background: linear-gradient(135deg, #3a9ea5 0%, #2b7a80 100%); border-radius: 16px; padding: 40px; text-align: center; margin-bottom: 40px;">
+    <h1 style="color: white; font-size: 2.2rem; font-weight: 700; margin-bottom: 10px;">Médicos</h1>
+    <p style="color: rgba(255,255,255,0.85); font-size: 1rem; margin: 0;">Gestión de médicos disponibles en la clínica</p>
+</div>
+
+<div style="margin-bottom: 24px;">
+    <a asp-action="AgregarMedico" style="background: #3a9ea5; border: none; color: white; border-radius: 8px; padding: 10px 28px; font-weight: 600; text-decoration: none;">
+        + Agregar nuevo médico
+    </a>
+</div>
+
+<div style="background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #e8f7f8;">
+                <th style="padding: 14px 20px; text-align: left; color: #2b7a80; font-weight: 700;">Nombre</th>
+                <th style="padding: 14px 20px; text-align: left; color: #2b7a80; font-weight: 700;">Especialidad</th>
+                <th style="padding: 14px 20px;"></th>
+                <th style="padding: 14px 20px;"></th>
+                <th style="padding: 14px 20px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr style="border-top: 1px solid #f0f0f0;">
+                    <td style="padding: 14px 20px; font-weight: 600; color: #333;">@m.Nombre @m.Apellido</td>
+                    <td style="padding: 14px 20px; color: #6c757d;">@m.Especialidad</td>
+                    <td style="padding: 14px 20px;">
+                        <a asp-action="Detalle" asp-route-id="@m.Id" style="color: #3a9ea5; font-weight: 600; text-decoration: none;">
+                            Ver detalle
+                        </a>
+                    </td>
+                    <td style="padding: 14px 20px;">
+                        <a asp-action="Editar" asp-route-id="@m.Id" style="background: #e8f7f8; color: #2b7a80; border-radius: 6px; padding: 6px 16px; font-weight: 600; text-decoration: none;">
+                            Editar
+                        </a>
+                    </td>
+                    <td style="padding: 14px 20px;">
+                        <a asp-action="Eliminar" asp-route-id="@m.Id" style="background: #fde8e8; color: #c0392b; border-radius: 6px; padding: 6px 16px; font-weight: 600; text-decoration: none;">
+                            Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 24px;">
+    <a asp-controller="Home" asp-action="Index" style="color: #3a9ea5; font-weight: 600; text-decoration: none;">
+        ← Volver al menú
+    </a>
+</div>
