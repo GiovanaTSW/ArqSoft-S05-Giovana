@@ -23,5 +23,33 @@ namespace CitasApp.Repositories
 
         public Medico? ObtenerPorId(int id) =>
             ObtenerTodos().FirstOrDefault(m => m.Id == id);
+
+        public void Agregar(Medico medico)
+        {
+            var lista = ObtenerTodos();
+            medico.Id = lista.Count > 0 ? lista.Max(m => m.Id) + 1 : 1;
+            lista.Add(medico);
+            File.WriteAllText(_path, JsonSerializer.Serialize(lista, _options));
+        }
+
+        public void Eliminar(int id)
+        {
+            var lista = ObtenerTodos();
+            var medico = lista.FirstOrDefault(m => m.Id == id);
+            if (medico == null) return;
+
+            lista.Remove(medico);
+            File.WriteAllText(_path, JsonSerializer.Serialize(lista, _options));
+        }
+
+        public void Actualizar(Medico medico)
+        {
+            var lista = ObtenerTodos();
+            var index = lista.FindIndex(m => m.Id == medico.Id);
+            if (index == -1) return;
+
+            lista[index] = medico;
+            File.WriteAllText(_path, JsonSerializer.Serialize(lista, _options));
+        }
     }
 }

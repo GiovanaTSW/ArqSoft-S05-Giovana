@@ -1,9 +1,15 @@
 ﻿@model List<CitasApp.Models.Medico>
+
 <h1>Médicos disponibles</h1>
+<a asp-action="AgregarMedico" class="btn btn-primary">+ Agregar nuevo médico</a>
+<br />
+<br />
 <table border="1" cellpadding="8">
     <tr>
         <th>Nombre</th>
         <th>Especialidad</th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
     @foreach (var m in Model)
@@ -12,6 +18,8 @@
             <td>@m.Nombre @m.Apellido</td>
             <td>@m.Especialidad</td>
             <td><a asp-action="Detalle" asp-route-id="@m.Id">Ver detalle</a></td>
+            <td><a asp-action="Editar" asp-route-id="@m.Id" class="btn btn-warning">Editar</a></td>
+            <td><a asp-action="Eliminar" asp-route-id="@m.Id" class="btn btn-danger">Eliminar</a></td>
         </tr>
     }
 </table>

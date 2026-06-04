@@ -1,0 +1,13 @@
+﻿@model CitasApp.Models.Medico
+
+<h1>¿Eliminar médico?</h1>
+<p><strong>Nombre:</strong> @Model.Nombre @Model.Apellido</p>
+<p><strong>Especialidad:</strong> @Model.Especialidad</p>
+<p><strong>Número de licencia:</strong> @Model.NumeroLicencia</p>
+
+<form asp-controller="Medico" asp-action="Eliminar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Sí, eliminar</button>
+    <a asp-action="Index">← Cancelar</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">← Volver al menú</a>
+</form>
