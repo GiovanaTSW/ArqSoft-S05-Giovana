@@ -1,5 +1,8 @@
 ﻿@model List<CitasApp.Models.Paciente>
 <h1>Pacientes registrados</h1>
+<a asp-action="AgregarPaciente">+ Agregar nuevo paciente</a>
+<br />
+<br />
 <table border="1" cellpadding="8">
     <tr>
         <th>Nombre</th>
@@ -14,8 +17,6 @@
             <td>@p.Email</td>
             <td>@p.Telefono</td>
             <td><a asp-action="Detalle" asp-route-id="@p.Id">Ver detalle</a></td>
-            <td><a asp-action="AgregarPaciente" asp-route-id="@p.Id">Agregar paciente</a></td>
         </tr>
-       
     }
 </table>
