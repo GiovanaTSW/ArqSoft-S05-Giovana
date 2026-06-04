@@ -31,5 +31,15 @@ namespace CitasApp.Repositories
             lista.Add(paciente);
             File.WriteAllText(_path, JsonSerializer.Serialize(lista, _options));
         }
+
+        public void Eliminar(int id)
+        {
+            var lista = ObtenerTodos();
+            var paciente = lista.FirstOrDefault(p => p.Id == id);
+            if (paciente == null) return;
+
+            lista.Remove(paciente);
+            File.WriteAllText(_path, JsonSerializer.Serialize(lista, _options));
+        }
     }
 }

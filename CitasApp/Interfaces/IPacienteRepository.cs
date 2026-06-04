@@ -8,5 +8,7 @@ namespace CitasApp.Interfaces
         Paciente? ObtenerPorId(int id);
 
         void Agregar(Paciente paciente);
+
+        void Eliminar(int id);
     }
 }
