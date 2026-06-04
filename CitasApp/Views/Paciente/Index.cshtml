@@ -14,6 +14,8 @@
             <td>@p.Email</td>
             <td>@p.Telefono</td>
             <td><a asp-action="Detalle" asp-route-id="@p.Id">Ver detalle</a></td>
+            <td><a asp-action="AgregarPaciente" asp-route-id="@p.Id">Agregar paciente</a></td>
         </tr>
+       
     }
 </table>

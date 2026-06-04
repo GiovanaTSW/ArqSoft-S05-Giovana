@@ -15,5 +15,11 @@ namespace CitasApp.Controllers
             var paciente = _repo.ObtenerPorId(id);
             return paciente == null ? NotFound() : View(paciente);
         }
+
+        public IActionResult AgregarPaciente(int id)
+        {
+            var paciente = _repo.ObtenerPorId(id);
+            return paciente == null ? NotFound() : View(paciente);
+        }
     }
 }
