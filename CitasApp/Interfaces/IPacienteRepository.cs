@@ -10,5 +10,7 @@ namespace CitasApp.Interfaces
         void Agregar(Paciente paciente);
 
         void Eliminar(int id);
+
+        void Actualizar(Paciente paciente);
     }
 }

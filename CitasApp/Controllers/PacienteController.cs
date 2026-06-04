@@ -43,5 +43,22 @@ namespace CitasApp.Controllers
             _repo.Eliminar(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            var paciente = _repo.ObtenerPorId(id);
+            return paciente == null ? NotFound() : View(paciente);
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Paciente paciente)
+        {
+            if (!ModelState.IsValid)
+                return View(paciente);
+
+            _repo.Actualizar(paciente);
+            return RedirectToAction("Index");
+        }
     }
 }
