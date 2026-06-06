@@ -56,10 +56,14 @@ CitasApp/
 └── Program.cs
 ```
 
+---
+
 ## Entidades
 - **Paciente** — lista y detalle de pacientes registrados
 - **Médico** — lista y detalle de médicos disponibles
 - **Cita** — agenda completa y filtro por paciente
+
+---
 
 ## Persistencia
 Archivos JSON en `data/` — sin base de datos.
@@ -67,6 +71,24 @@ Archivos JSON en `data/` — sin base de datos.
 - `data/medicos.json`
 - `data/citas.json`
 
+Los datos se guardan como JSON en la carpeta `data/`. No se requiere ninguna base de datos ni configuración de conexión.
+ 
+**`data/citas.json`** — ejemplo:
+```json
+[
+  {
+    "Id": 1,
+    "PacienteId": 1,
+    "MedicoId": 1,
+    "Fecha": "2026-06-01",
+    "Hora": "09:00",
+    "Motivo": "Consulta general",
+    "Estado": "Confirmada"
+  }
+]
+```
+
+---
 ## Arquitectura
 Repositorios por interfaz con inyección de dependencias.
 - `Interfaces/` — contratos (`IPacienteRepository`, `IMedicoRepository`, `ICitaRepository`)
