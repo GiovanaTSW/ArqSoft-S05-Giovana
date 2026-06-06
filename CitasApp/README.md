@@ -132,3 +132,11 @@ Repositorios por interfaz con inyección de dependencias.
 
 ### Privacy
 <img width="2504" height="1334" alt="Captura de pantalla 2026-06-05 225209" src="https://github.com/user-attachments/assets/fc54ba7d-5a9c-4f62-9dc8-00e3a024cd4e" />
+
+---
+
+## Uso de Inteligencia Artificial
+
+Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial
+(Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de
+estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
