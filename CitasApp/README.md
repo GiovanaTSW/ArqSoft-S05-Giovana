@@ -8,6 +8,23 @@ Aplicación web de gestión de citas médicas construida con ASP.NET Core MVC (.
 - Visual Strudio Community 2022
 
 ---
+## Instalación y ejecución
+```bash
+# Clonar el repositorio
+git clone <url-del-repo>
+cd ArqSoft-S05-Giovana/CitasApp
+ 
+# Restaurar dependencias y ejecutar
+dotnet run
+```
+
+La aplicación estará disponible en `https://localhost:7108`
+
+---
+
+## Estructura del proyecto
+
+
 
 ## Entidades
 - **Paciente** — lista y detalle de pacientes registrados
