@@ -18,15 +18,6 @@
     "Estado": "Confirmada"
   },
   {
-    "Id": 3,
-    "PacienteId": 3,
-    "MedicoId": 1,
-    "Fecha": "2026-06-03",
-    "Hora": "11:00",
-    "Motivo": "Primera consulta",
-    "Estado": "Pendiente"
-  },
-  {
     "Id": 4,
     "PacienteId": 4,
     "MedicoId": 4,
@@ -34,5 +25,14 @@
     "Hora": "12:00",
     "Motivo": "Cirug\u00EDa",
     "Estado": "Confirmada"
+  },
+  {
+    "Id": 5,
+    "PacienteId": 5,
+    "MedicoId": 1,
+    "Fecha": "2026-07-02",
+    "Hora": "18:30",
+    "Motivo": "Ortopedia",
+    "Estado": "Cancelada"
   }
 ]
