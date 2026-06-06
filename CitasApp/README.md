@@ -89,11 +89,14 @@ Los datos se guardan como JSON en la carpeta `data/`. No se requiere ninguna bas
 ```
 
 ---
+
 ## Arquitectura
 Repositorios por interfaz con inyección de dependencias.
 - `Interfaces/` — contratos (`IPacienteRepository`, `IMedicoRepository`, `ICitaRepository`)
 - `Repositories/` — implementaciones JSON
 - `Models/` — entidades + `CitaJson` como DTO de serialización
+
+---
 
 ## Navegación
 - `/Paciente` — lista de pacientes
@@ -101,6 +104,12 @@ Repositorios por interfaz con inyección de dependencias.
 - `/Cita` — agenda completa
 - `/Cita/PorPaciente?pacienteId=1` — citas de un paciente específico
 
-## Requisitos
-- .NET 10.0
-- Visual Studio 2022
+---
+
+## Tecnologías
+
+- **ASP.NET Core MVC** (.NET 10)
+- **Razor Views** (`.cshtml`)
+- **Bootstrap 5** (incluido en `wwwroot/lib/`)
+- **System.Text.Json** para serialización
+- **jQuery Validation** para validación en cliente
