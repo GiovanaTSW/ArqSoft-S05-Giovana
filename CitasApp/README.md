@@ -24,7 +24,37 @@ La aplicación estará disponible en `https://localhost:7108`
 
 ## Estructura del proyecto
 
-
+```
+CitasApp/
+├── Controllers/
+│   ├── CitaController.cs        # CRUD de citas + filtro por paciente
+│   ├── MedicoController.cs      # CRUD de médicos
+│   ├── PacienteController.cs    # CRUD de pacientes
+│   └── HomeController.cs
+├── Interfaces/
+│   ├── ICitaRepository.cs
+│   ├── IMedicoRepository.cs
+│   └── IPacienteRepository.cs
+├── Repositories/
+│   ├── JsonCitaRepository.cs    # Persistencia en citas.json
+│   ├── JsonMedicoRepository.cs  # Persistencia en medicos.json
+│   └── JsonPacienteRepository.cs# Persistencia en pacientes.json
+├── Models/
+│   ├── Cita.cs
+│   ├── CitaJson.cs              # DTO para serialización (Fecha/Hora como string)
+│   ├── Medico.cs
+│   └── Paciente.cs
+├── Views/
+│   ├── Cita/                    # Index, AgregarCita, Editar, Eliminar, PorPaciente
+│   ├── Medico/                  # Index, Detalle, AgregarMedico, Editar, Eliminar
+│   ├── Paciente/                # Index, Detalle, AgregarPaciente, Editar, Eliminar
+│   └── Shared/                  # Layout, Error
+├── data/
+│   ├── citas.json
+│   ├── medicos.json
+│   └── pacientes.json
+└── Program.cs
+```
 
 ## Entidades
 - **Paciente** — lista y detalle de pacientes registrados
