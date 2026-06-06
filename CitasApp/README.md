@@ -113,3 +113,15 @@ Repositorios por interfaz con inyección de dependencias.
 - **Bootstrap 5** (incluido en `wwwroot/lib/`)
 - **System.Text.Json** para serialización
 - **jQuery Validation** para validación en cliente
+
+---
+
+## Capturas de pantalla
+
+### Pacientes
+
+### Médicos
+
+### Citas
+
+### Privacy
