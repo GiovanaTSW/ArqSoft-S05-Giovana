@@ -1,8 +1,9 @@
-﻿using CitasApp.Interfaces;
-using CitasApp.Models;
+﻿using Microsoft.AspNetCore.Hosting;
+using CitasApp.Domain.Interfaces;
+using CitasApp.Domain.Models;
 using System.Text.Json;
 
-namespace CitasApp.Repositories
+namespace CitasApp.Infrastructure.Repositories
 {
     public class JsonPacienteRepository : IPacienteRepository
     {

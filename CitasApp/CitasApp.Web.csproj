@@ -10,4 +10,9 @@
     <Folder Include="data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CitasApp.Domain\CitasApp.Domain.csproj" />
+    <ProjectReference Include="..\CitasApp.Infrastructure\CitasApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

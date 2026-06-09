@@ -1,6 +1,7 @@
-﻿using CitasApp.Models;
+﻿using System.Collections.Generic;
+using CitasApp.Domain.Models;
 
-namespace CitasApp.Interfaces
+namespace CitasApp.Domain.Interfaces
 {
     public interface ICitaRepository
     {
