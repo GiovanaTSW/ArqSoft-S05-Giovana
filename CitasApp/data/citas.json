@@ -33,6 +33,15 @@
     "Fecha": "2026-07-02",
     "Hora": "18:30",
     "Motivo": "Ortopedia",
+    "Estado": "Confirmada"
+  },
+  {
+    "Id": 6,
+    "PacienteId": 5,
+    "MedicoId": 1,
+    "Fecha": "0001-01-01",
+    "Hora": "00:00",
+    "Motivo": "Consulta general",
     "Estado": "Cancelada"
   }
 ]
