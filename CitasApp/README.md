@@ -1,119 +1,125 @@
 # CitasApp
-
-Aplicación web de gestión de citas médicas construida con ASP.NET Core MVC (.NET 10). Permite administrar pacientes, médicos y citas a través de una interfaz web, con persistencia en archivos JSON (sin base de datos).
-
+ 
+Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes. Esta versión migra de una **arquitectura monolítica por capas** a una **Arquitectura Hexagonal (Puertos y Adaptadores)**, separando el núcleo del dominio de la infraestructura y la presentación.
+ 
 ---
-## Requisitos
-- .NET 10.0
-- Visual Strudio Community 2022
-
+ 
+## Arquitectura
+ 
+Este proyecto sigue el patrón de **Arquitectura Hexagonal** (también conocido como Puertos y Adaptadores), introducido por Alistair Cockburn. La idea central es que la lógica de dominio se ubica en el centro y se comunica con el exterior únicamente a través de interfaces bien definidas (puertos), con implementaciones concretas (adaptadores) provistas por la capa de infraestructura.
+ 
+```
+CitasApp (Solución)
+├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
+├── CitasApp.Infrastructure  # Adaptadores — repositorios en archivos JSON
+└── CitasApp (Web)           # Presentación — controladores, vistas, inyección de dependencias
+```
+ 
+### Responsabilidades por capa
+ 
+**`CitasApp.Domain`** — el hexágono interno. Contiene:
+- Modelos de dominio: `Cita`, `Medico`, `Paciente`
+- Interfaces de puertos: `ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`
+Este proyecto **no tiene dependencias** hacia infraestructura ni ASP.NET. Define *qué* necesita la aplicación, no *cómo* se hace.
+ 
+**`CitasApp.Infrastructure`** — la capa de adaptadores. Contiene:
+- `JsonCitaRepository`, `JsonMedicoRepository`, `JsonPacienteRepository`
+Estas clases implementan las interfaces del dominio usando persistencia en archivos JSON. Son el único lugar donde viven las preocupaciones de I/O. Cambiar a una base de datos solo requiere agregar un nuevo adaptador aquí — el dominio no se toca.
+ 
+**`CitasApp` (Web)** — el punto de entrada y capa de presentación. Contiene:
+- Controladores MVC y vistas Razor de ASP.NET Core
+- Registro de dependencias en `Program.cs`
+El proyecto Web depende de `Domain` (para las interfaces) e `Infrastructure` (para registrar las implementaciones concretas). Los controladores dependen únicamente de las interfaces del dominio, nunca directamente de infraestructura.
+ 
+### Diagrama de dependencias
+ 
+```
+CitasApp.Web ──────────────► CitasApp.Domain
+      │                            ▲
+      └──► CitasApp.Infrastructure ┘
+```
+ 
+Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero los controladores solo interactúan con los puertos del Domain.
+ 
 ---
-## Instalación y ejecución
+ 
+## Migración Arquitectónica
+ 
+| Aspecto | Anterior (Capas) | Actual (Hexagonal) |
+|---|---|---|
+| Estructura | Proyecto único, carpetas por capa | Tres proyectos separados |
+| Aislamiento del dominio | Dominio mezclado con infraestructura | Domain no tiene dependencias externas |
+| Ubicación de interfaces | Capa de infraestructura | Capa de dominio (puertos) |
+| Cambio de persistencia | Requiere refactorizar controladores | Solo se reemplaza el adaptador |
+| Testabilidad | Difícil de mockear | Se inyecta cualquier adaptador vía DI |
+ 
+---
+ 
+## Stack Tecnológico
+ 
+- .NET 10
+- ASP.NET Core MVC
+- Bootstrap 5
+- Persistencia en archivos JSON (`System.Text.Json`)
+---
+ 
+## Estructura del Proyecto
+ 
+```
+ArqSoft-S05-Giovana-hexagonal/
+├── CitasApp.Domain/
+│   ├── Interfaces/
+│   │   ├── ICitaRepository.cs
+│   │   ├── IMedicoRepository.cs
+│   │   └── IPacienteRepository.cs
+│   └── Models/
+│       ├── Cita.cs
+│       ├── Medico.cs
+│       └── Paciente.cs
+├── CitasApp.Infrastructure/
+│   └── Repositories/
+│       ├── JsonCitaRepository.cs
+│       ├── JsonMedicoRepository.cs
+│       └── JsonPacienteRepository.cs
+└── CitasApp/ (Web)
+    ├── Controllers/
+    │   ├── CitaController.cs
+    │   ├── MedicoController.cs
+    │   ├── PacienteController.cs
+    │   └── HomeController.cs
+    ├── Views/
+    ├── data/
+    │   ├── citas.json
+    │   ├── medicos.json
+    │   └── pacientes.json
+    └── Program.cs
+```
+ 
+---
+ 
+## Cómo ejecutar
+ 
+**Requisito:** .NET 10 SDK
+ 
 ```bash
 # Clonar el repositorio
-git clone <url-del-repo>
-cd ArqSoft-S05-Giovana/CitasApp
+git clone https://github.com/GiovanaTSW/CitasApp.git
+cd ArqSoft-S05-Giovana-hexagonal
  
-# Restaurar dependencias y ejecutar
-dotnet run
+# Ejecutar la aplicación
+dotnet run --project CitasApp
 ```
-
-La aplicación estará disponible en `https://localhost:7108`
-
----
-
-## Estructura del proyecto
-
-```
-CitasApp/
-├── Controllers/
-│   ├── CitaController.cs        # CRUD de citas + filtro por paciente
-│   ├── MedicoController.cs      # CRUD de médicos
-│   ├── PacienteController.cs    # CRUD de pacientes
-│   └── HomeController.cs
-├── Interfaces/
-│   ├── ICitaRepository.cs
-│   ├── IMedicoRepository.cs
-│   └── IPacienteRepository.cs
-├── Repositories/
-│   ├── JsonCitaRepository.cs    # Persistencia en citas.json
-│   ├── JsonMedicoRepository.cs  # Persistencia en medicos.json
-│   └── JsonPacienteRepository.cs# Persistencia en pacientes.json
-├── Models/
-│   ├── Cita.cs
-│   ├── CitaJson.cs              # DTO para serialización (Fecha/Hora como string)
-│   ├── Medico.cs
-│   └── Paciente.cs
-├── Views/
-│   ├── Cita/                    # Index, AgregarCita, Editar, Eliminar, PorPaciente
-│   ├── Medico/                  # Index, Detalle, AgregarMedico, Editar, Eliminar
-│   ├── Paciente/                # Index, Detalle, AgregarPaciente, Editar, Eliminar
-│   └── Shared/                  # Layout, Error
-├── data/
-│   ├── citas.json
-│   ├── medicos.json
-│   └── pacientes.json
-└── Program.cs
-```
-
----
-
-## Entidades
-- **Paciente** — lista y detalle de pacientes registrados
-- **Médico** — lista y detalle de médicos disponibles
-- **Cita** — agenda completa y filtro por paciente
-
----
-
-## Persistencia
-Archivos JSON en `data/` — sin base de datos.
-- `data/pacientes.json`
-- `data/medicos.json`
-- `data/citas.json`
-
-Los datos se guardan como JSON en la carpeta `data/`. No se requiere ninguna base de datos ni configuración de conexión.
  
-**`data/citas.json`** — ejemplo:
-```json
-[
-  {
-    "Id": 1,
-    "PacienteId": 1,
-    "MedicoId": 1,
-    "Fecha": "2026-06-01",
-    "Hora": "09:00",
-    "Motivo": "Consulta general",
-    "Estado": "Confirmada"
-  }
-]
-```
-
+La app estará disponible en `https://localhost:5001` (o el puerto que indique la consola).
+ 
 ---
-
-## Arquitectura
-Repositorios por interfaz con inyección de dependencias.
-- `Interfaces/` — contratos (`IPacienteRepository`, `IMedicoRepository`, `ICitaRepository`)
-- `Repositories/` — implementaciones JSON
-- `Models/` — entidades + `CitaJson` como DTO de serialización
-
----
-
-## Navegación
-- `/Paciente` — lista de pacientes
-- `/Medico` — lista de médicos
-- `/Cita` — agenda completa
-- `/Cita/PorPaciente?pacienteId=1` — citas de un paciente específico
-
----
-
-## Tecnologías
-
-- **ASP.NET Core MVC** (.NET 10)
-- **Razor Views** (`.cshtml`)
-- **Bootstrap 5** (incluido en `wwwroot/lib/`)
-- **System.Text.Json** para serialización
-- **jQuery Validation** para validación en cliente
-
+ 
+## Funcionalidades
+ 
+- CRUD completo de Pacientes, Médicos y Citas
+- Filtrar citas por paciente
+- Persistencia en archivos JSON (sin base de datos)
+- Separación limpia de la lógica de dominio e infraestructura
 ---
 
 ## Capturas de pantalla
