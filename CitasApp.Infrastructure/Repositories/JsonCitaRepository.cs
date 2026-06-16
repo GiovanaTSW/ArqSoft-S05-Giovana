@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using CitasApp.Domain.Interfaces;
+﻿using CitasApp.Domain.Interfaces;
 using CitasApp.Domain.Models;
 using System.Text.Json;
 
@@ -10,9 +9,9 @@ namespace CitasApp.Infrastructure.Repositories
         private readonly string _path;
         private readonly JsonSerializerOptions _options = new() { WriteIndented = true };
 
-        public JsonCitaRepository(IWebHostEnvironment env)
+        public JsonCitaRepository(string path)
         {
-            _path = Path.Combine(env.ContentRootPath, "data", "citas.json");
+            _path = path;
         }
 
         public List<Cita> ObtenerTodos()

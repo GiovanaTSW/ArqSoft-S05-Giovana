@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using CitasApp.Domain.Interfaces;
+﻿using CitasApp.Domain.Interfaces;
 using CitasApp.Domain.Models;
 using System.Text.Json;
 
@@ -10,9 +9,9 @@ namespace CitasApp.Infrastructure.Repositories
         private readonly string _path;
         private readonly JsonSerializerOptions _options = new() { WriteIndented = true };
 
-        public JsonPacienteRepository(IWebHostEnvironment env)
+        public JsonPacienteRepository(string path)
         {
-            _path = Path.Combine(env.ContentRootPath, "data", "pacientes.json");
+            _path = path;
         }
 
         public List<Paciente> ObtenerTodos()
@@ -25,7 +24,7 @@ namespace CitasApp.Infrastructure.Repositories
         public Paciente? ObtenerPorId(int id) =>
             ObtenerTodos().FirstOrDefault(p => p.Id == id);
 
-        public void Agregar(Paciente paciente)          // ← nuevo
+        public void Agregar(Paciente paciente)
         {
             var lista = ObtenerTodos();
             paciente.Id = lista.Count > 0 ? lista.Max(p => p.Id) + 1 : 1;

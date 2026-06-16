@@ -2,7 +2,7 @@
 using CitasApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CitasApp.Web.Controllers
+namespace CitasApp.Application.Controllers
 {
     public class CitaController : Controller
     {
