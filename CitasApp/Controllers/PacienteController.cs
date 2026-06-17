@@ -2,7 +2,7 @@
 using CitasApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CitasApp.Application.Controllers
+namespace CitasApp.Web.Controllers
 {
     public class PacienteController : Controller
     {

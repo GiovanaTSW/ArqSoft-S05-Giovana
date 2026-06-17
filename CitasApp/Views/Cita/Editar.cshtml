@@ -15,7 +15,7 @@
         <select asp-for="PacienteId">
             @foreach (var p in pacientes!)
             {
-                <option value="@p.Id">@p.Nombre @p.Apellido</option>
+                <option value="@p.Id" selected="@(p.Id == Model.PacienteId ? "selected" : null)">@p.Nombre @p.Apellido</option>
             }
         </select>
     </div>
@@ -24,7 +24,7 @@
         <select asp-for="MedicoId">
             @foreach (var m in medicos!)
             {
-                <option value="@m.Id">@m.Nombre @m.Apellido</option>
+                <option value="@m.Id" selected="@(m.Id == Model.MedicoId ? "selected" : null)">@m.Nombre @m.Apellido</option>
             }
         </select>
     </div>
