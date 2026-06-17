@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Carlos",
+    "Apellido": "Reyes",
+    "Especialidad": "Medicina General",
+    "NumeroLicencia": "MG-10421"
+  },
+  {
+    "Id": 2,
+    "Nombre": "Patricia",
+    "Apellido": "Vega",
+    "Especialidad": "Pediatr\u00EDa",
+    "NumeroLicencia": "PD-20835"
+  },
+  {
+    "Id": 3,
+    "Nombre": "Ana",
+    "Apellido": "Garc\u00EDa",
+    "Especialidad": "Fisicoqu\u00EDmica",
+    "NumeroLicencia": "FQ-90220"
+  }
+]
