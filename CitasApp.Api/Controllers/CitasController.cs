@@ -31,5 +31,14 @@ namespace CitasApp.Api.Controllers
             var citas = _citaService.ObtenerPorPaciente(pacienteId);
             return citas.Count == 0 ? NotFound() : Ok(citas);
         }
+
+        [HttpPost("confirmar/{id}")]
+        public IActionResult ConfirmarCita(int id)
+        {
+            var resultado = _citaService.Confirmar(id);
+            if (resultado == null) return NotFound();
+            return Ok(resultado);
+        }
+
     }
 }

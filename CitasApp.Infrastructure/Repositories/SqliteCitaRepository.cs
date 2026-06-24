@@ -122,7 +122,7 @@ namespace CitasApp.Infrastructure.Repositories
             cmd.ExecuteNonQuery();
         }
 
-        public void ConfirmarCita(int id)
+        public Cita? Confirmar(int id)
         {
             using var conn = Conectar();
             var cmd = conn.CreateCommand();
@@ -130,6 +130,8 @@ namespace CitasApp.Infrastructure.Repositories
                 "UPDATE Citas SET Estado = 'Confirmada' WHERE Id = $id;";
             cmd.Parameters.AddWithValue("$id", id);
             cmd.ExecuteNonQuery();
+
+            return ObtenerPorId(id);
         }
 
         public void Eliminar(int id)

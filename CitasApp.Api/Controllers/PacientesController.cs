@@ -1,4 +1,5 @@
 ﻿using CitasApp.Application.Services;
+using CitasApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CitasApp.Api.Controllers
@@ -23,5 +24,6 @@ namespace CitasApp.Api.Controllers
             var paciente = _service.ObtenerPorId(id);
             return paciente == null ? NotFound() : Ok(paciente);
         }
+
     }
 }

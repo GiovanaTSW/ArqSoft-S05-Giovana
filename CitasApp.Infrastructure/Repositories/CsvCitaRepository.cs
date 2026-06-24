@@ -92,16 +92,16 @@ namespace CitasApp.Infrastructure.Repositories
             EscribirTodos(citas);
         }
 
-        public void ConfirmarCita(int id)
+        public Cita? Confirmar(int id)
         {
             var citas = LeerTodos();
             var cita  = citas.FirstOrDefault(c => c.Id == id);
 
-            if (cita is not null)
-            {
-                cita.Estado = "Confirmada";
-                EscribirTodos(citas);
-            }
+            if (cita is null) return null;
+
+            cita.Estado = "Confirmada";
+            EscribirTodos(citas);
+            return cita;
         }
 
         public void Eliminar(int id)

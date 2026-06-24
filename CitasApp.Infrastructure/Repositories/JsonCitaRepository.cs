@@ -62,6 +62,17 @@ namespace CitasApp.Infrastructure.Repositories
             GuardarTodos(lista);
         }
 
+        public Cita? Confirmar(int id)
+        {
+            var lista = ObtenerTodos();
+            var cita = lista.FirstOrDefault(c => c.Id == id);
+            if (cita == null) return null;
+
+            cita.Estado = "Confirmada";
+            GuardarTodos(lista);
+            return cita;
+        }
+
         private void GuardarTodos(List<Cita> lista)
         {
             var citasJson = lista.Select(c => new CitaJson

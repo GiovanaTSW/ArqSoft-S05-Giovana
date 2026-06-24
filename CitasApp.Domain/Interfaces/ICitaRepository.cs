@@ -13,5 +13,7 @@ namespace CitasApp.Domain.Interfaces
         void Eliminar(int id);
 
         void Actualizar(Cita cita);
+
+        Cita? Confirmar(int id);
     }
 }
