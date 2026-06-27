@@ -2,7 +2,7 @@
 
 Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes.  
 Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres **patrones de diseño GoF**: Factory Method, Observer y Decorator. También se agrega una API REST (`CitasApp.Api`) y soporte para múltiples adaptadores de persistencia (JSON, CSV, SQLite).
----
+
  
 ## Patrones GoF implementados
  
@@ -35,47 +35,29 @@ CitasApp.Infrastructure/Repositories/
 └── LoggingPacienteRepository.cs
 ```
  
----
-## Stack Tecnológico
- 
-- .NET 10
-- ASP.NET Core MVC
-- Bootstrap 5
-- Persistencia en archivos JSON (`System.Text.Json`)
----
- 
-## Estructura del Proyecto
+## Arquitectura
  
 ```
-ArqSoft-S05-Giovana-hexagonal/
-├── CitasApp.Domain/
-│   ├── Interfaces/
-│   │   ├── ICitaRepository.cs
-│   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
-│   └── Models/
-│       ├── Cita.cs
-│       ├── Medico.cs
-│       └── Paciente.cs
-├── CitasApp.Infrastructure/
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       └── JsonPacienteRepository.cs
-└── CitasApp/ (Web)
-    ├── Controllers/
-    │   ├── CitaController.cs
-    │   ├── MedicoController.cs
-    │   ├── PacienteController.cs
-    │   └── HomeController.cs
-    ├── Views/
-    ├── data/
-    │   ├── citas.json
-    │   ├── medicos.json
-    │   └── pacientes.json
-    └── Program.cs
+CitasApp (Solución)
+├── CitasApp.Domain          # Núcleo — entidades, interfaces de puertos y ICitaObserver
+├── CitasApp.Infrastructure  # Adaptadores — JSON / CSV / SQLite + Factory + Observers + Decorator
+├── CitasApp (Web)           # Presentación MVC — controladores, vistas, DI
+└── CitasApp.Api             # API REST — controladores ControllerBase, endpoints HTTP
+```
+
+### Diagrama de dependencias
+ 
+```
+CitasApp.Web ──────────────► CitasApp.Domain
+      │                            ▲
+      └──► CitasApp.Infrastructure ┘
+ 
+CitasApp.Api ──────────────► CitasApp.Domain
+      │                            ▲
+      └──► CitasApp.Infrastructure ┘
 ```
  
+
 ---
  
 ## Cómo ejecutar
