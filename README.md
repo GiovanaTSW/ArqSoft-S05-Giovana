@@ -36,19 +36,17 @@ Este proyecto sigue el patrón introducido por Alistair Cockburn. La lógica de 
  
 ### Responsabilidades por capa
  
-**`CitasApp.Domain`** — el hexágono interno. Contiene:
-- Modelos de dominio: `Cita`, `Medico`, `Paciente`
-- Interfaces de puertos: `ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`
-Este proyecto **no tiene dependencias** hacia infraestructura ni ASP.NET. Define *qué* necesita la aplicación, no *cómo* se hace.
+**`CitasApp.Domain`** — el hexagono interno. Contiene modelos de dominio (`Cita`, `Medico`, `Paciente`) e interfaces de puertos (`ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`). Sin dependencias hacia infraestructura ni ASP.NET.
  
-**`CitasApp.Infrastructure`** — la capa de adaptadores. Contiene:
-- `JsonCitaRepository`, `JsonMedicoRepository`, `JsonPacienteRepository`
-Estas clases implementan las interfaces del dominio usando persistencia en archivos JSON. Son el único lugar donde viven las preocupaciones de I/O. Cambiar a una base de datos solo requiere agregar un nuevo adaptador aquí — el dominio no se toca.
+**`CitasApp.Application`** — servicios de aplicacion (`CitaService`, `MedicoService`, `PacienteService`). Orquestan la logica de negocio usando solo las interfaces del dominio.
  
-**`CitasApp` (Web)** — el punto de entrada y capa de presentación. Contiene:
-- Controladores MVC y vistas Razor de ASP.NET Core
-- Registro de dependencias en `Program.cs`
-El proyecto Web depende de `Domain` (para las interfaces) e `Infrastructure` (para registrar las implementaciones concretas). Los controladores dependen únicamente de las interfaces del dominio, nunca directamente de infraestructura.
+**`CitasApp.Infrastructure`** — adaptadores de salida. Implementa las interfaces del dominio. Esta rama incluye tres adaptadores intercambiables sin tocar el dominio:
+ 
+- `JsonPacienteRepository`, `JsonMedicoRepository`, `JsonCitaRepository`
+- `CsvPacienteRepository`, `CsvMedicoRepository`, `CsvCitaRepository`
+- `SqlitePacienteRepository`, `SqliteMedicoRepository`, `SqliteCitaRepository`
+
+**`CitasApp` (Web)** — adaptador de entrada MVC. Expone la funcionalidad via controladores y vistas Razor. En `Program.cs` se elige que adaptador de persistencia se inyecta, sin modificar nada mas.
  
 ### Diagrama de dependencias
  
