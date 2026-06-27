@@ -170,7 +170,13 @@ http://localhost:5071/api/calculadora/dividir?a=20&b=4
 ### Privacy
 <img width="2504" height="1334" alt="Captura de pantalla 2026-06-05 225209" src="https://github.com/user-attachments/assets/fc54ba7d-5a9c-4f62-9dc8-00e3a024cd4e" />
 
-### API REST — Calculadora (sumar)
+
+### API REST — Calculadora API funciona
+<img width="2076" height="1306" alt="Captura de pantalla 2026-06-27 001105" src="https://github.com/user-attachments/assets/da048093-5eeb-4b3a-bac2-72f8ce2a0e8e" />
+
+
+### API REST - Calculadora no conecta a API
+<img width="2090" height="1306" alt="Captura de pantalla 2026-06-27 001128" src="https://github.com/user-attachments/assets/98490b23-db3c-4c0e-af68-abf8a4e48f30" />
 
 
 ---
