@@ -1,20 +1,31 @@
 # CitasApp — Rama `gof`
- 
+
 Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes.  
 Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres **patrones de diseño GoF**: Factory Method, Observer y Decorator. También se agrega una API REST (`CitasApp.Api`) y soporte para múltiples adaptadores de persistencia (JSON, CSV, SQLite).
 ---
  
-## Arquitectura
+## Patrones GoF implementados
  
-Este proyecto sigue el patrón de **Arquitectura Hexagonal** (también conocido como Puertos y Adaptadores), introducido por Alistair Cockburn. La idea central es que la lógica de dominio se ubica en el centro y se comunica con el exterior únicamente a través de interfaces bien definidas (puertos), con implementaciones concretas (adaptadores) provistas por la capa de infraestructura.
+### Factory Method — `RepositoryFactory`
+Centraliza la creación de repositorios según el entorno de ejecución. El código que consume los repositorios no necesita conocer qué implementación concreta se instancia.
  
 ```
-CitasApp (Solución)
-├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
-├── CitasApp.Infrastructure  # Adaptadores — repositorios en archivos JSON
-└── CitasApp (Web)           # Presentación — controladores, vistas, inyección de dependencias
+CitasApp.Infrastructure/
+└── Repositories/
+    └── RepositoryFactory.cs   ← fábrica de IPacienteRepository, IMedicoRepository, ICitaRepository
 ```
  
+### Observer — notificaciones de citas
+Al crear o modificar una cita, se notifica automáticamente a todos los observadores registrados (SMS y Email). El servicio de dominio no depende de los observadores concretos, solo de la interfaz `ICitaObserver`.
+
+
+
+
+
+
+
+
+
 ### Responsabilidades por capa
  
 **`CitasApp.Domain`** — el hexágono interno. Contiene:
