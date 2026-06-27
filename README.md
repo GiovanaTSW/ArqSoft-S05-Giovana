@@ -166,6 +166,16 @@ La API REST estará disponible en `https://localhost:7030`.
 ### Privacy
 <img width="2504" height="1334" alt="Captura de pantalla 2026-06-05 225209" src="https://github.com/user-attachments/assets/fc54ba7d-5a9c-4f62-9dc8-00e3a024cd4e" />
 
+### ACITIVIDAD GOF
+<img width="2560" height="1600" alt="GET en navegador_Giovana Díaz" src="https://github.com/user-attachments/assets/af304a27-f8f3-4459-b364-05828f2d079b" />
+
+<img width="2560" height="1600" alt="GET en navegador paciente 6_Giovana Díaz" src="https://github.com/user-attachments/assets/f189b55a-9eb9-49dc-a7a3-0a28c95ffacf" />
+
+<img width="2560" height="1600" alt="EndpointPOST en Powershell_Giovana Díaz" src="https://github.com/user-attachments/assets/e3fa123e-d813-43ff-970d-53fbb3209175" />
+
+<img width="2560" height="1600" alt="Demostración de registros GET y POST_Giovana Díaz" src="https://github.com/user-attachments/assets/fa0341ed-f7ff-4688-a141-57bac4920c23" />
+
+
 ---
 
 ## Uso de Inteligencia Artificial
