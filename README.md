@@ -56,12 +56,11 @@ Lo importante: el agregar *CitasApp-Api* no se tocó ni una línea de *CitasApp.
 ### Diagrama de dependencias
  
 ```
-CitasApp.Web ──────────────► CitasApp.Domain
-      │                            ▲
-      └──► CitasApp.Infrastructure ┘
+CitasApp.Web  --+
+                +---> CitasApp.Application ---> CitasApp.Domain
+CitasApp.Api  --+              |                      ^
+                               +---> CitasApp.Infrastructure ---+
 ```
- 
-Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero los controladores solo interactúan con los puertos del Domain.
  
 ---
  
@@ -81,68 +80,96 @@ Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero l
  
 - .NET 10
 - ASP.NET Core MVC
+- ASP.NET Core Web API (*ControllerBase*)
 - Bootstrap 5
-- Persistencia en archivos JSON (`System.Text.Json`)
+- Persistencia en archivos JSON, CSV y SQLite
+
 ---
  
 ## Estructura del Proyecto
  
 ```
-ArqSoft-S05-Giovana-hexagonal/
-├── CitasApp.Domain/
-│   ├── Interfaces/
-│   │   ├── ICitaRepository.cs
-│   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
-│   └── Models/
-│       ├── Cita.cs
-│       ├── Medico.cs
-│       └── Paciente.cs
-├── CitasApp.Infrastructure/
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       └── JsonPacienteRepository.cs
-└── CitasApp/ (Web)
-    ├── Controllers/
-    │   ├── CitaController.cs
-    │   ├── MedicoController.cs
-    │   ├── PacienteController.cs
-    │   └── HomeController.cs
-    ├── Views/
-    ├── data/
-    │   ├── citas.json
-    │   ├── medicos.json
-    │   └── pacientes.json
-    └── Program.cs
+ArqSoft-S05-Giovana-Api/
++-- CitasApp.Domain/
+|   +-- Interfaces/
+|   |   +-- ICitaRepository.cs
+|   |   +-- IMedicoRepository.cs
+|   |   +-- IPacienteRepository.cs
+|   +-- Models/
+|       +-- Cita.cs
+|       +-- Medico.cs
+|       +-- Paciente.cs
++-- CitasApp.Application/
+|   +-- Service/
+|       +-- CitaService.cs
+|       +-- MedicoService.cs
+|       +-- PacienteService.cs
++-- CitasApp.Infrastructure/
+|   +-- Repositories/
+|       +-- JsonCitaRepository.cs / CsvCitaRepository.cs / SqliteCitaRepository.cs
+|       +-- JsonMedicoRepository.cs / CsvMedicoRepository.cs / SqliteMedicoRepository.cs
+|       +-- JsonPacienteRepository.cs / CsvPacienteRepository.cs / SqlitePacienteRepository.cs
++-- CitasApp/ (Web MVC)
+|   +-- Controllers/
+|   +-- Views/
+|   +-- Program.cs
++-- CitasApp.Api/ (REST)
+    +-- Controllers/
+    |   +-- CitasController.cs
+    |   +-- MedicosController.cs
+    |   +-- PacientesController.cs
+    +-- Program.cs
 ```
  
 ---
  
-## Cómo ejecutar
+## Endpoints del adaptador REST
+ 
+### Pacientes
+ 
+| Metodo | Endpoint               | Descripcion                 |
+|--------|------------------------|-----------------------------|
+| GET    | `/api/pacientes`       | Lista todos los pacientes   |
+| GET    | `/api/pacientes/{id}`  | Obtiene un paciente por ID  |
+
+ 
+### Medicos
+ 
+| Metodo | Endpoint             | Descripcion                |
+|--------|----------------------|----------------------------|
+| GET    | `/api/medicos`       | Lista todos los medicos    |
+| GET    | `/api/medicos/{id}`  | Obtiene un medico por ID   |
+
+ 
+### Citas
+ 
+| Metodo | Endpoint                        | Descripcion                     |
+|--------|---------------------------------|---------------------------------|
+| GET    | `/api/citas`                    | Lista todas las citas           |
+| GET    | `/api/citas/porpaciente/{id}`   | Filtra citas por ID de paciente |
+
+---
+ 
+ 
+## Como ejecutar
  
 **Requisito:** .NET 10 SDK
  
 ```bash
-# Clonar el repositorio
 git clone https://github.com/GiovanaTSW/CitasApp.git
-cd ArqSoft-S05-Giovana-hexagonal
+cd CitasApp
+git checkout api
  
-# Ejecutar la aplicación
+# Adaptador MVC
 dotnet run --project CitasApp
+ 
+# Adaptador REST (en otra terminal)
+dotnet run --project CitasApp.Api
 ```
  
-La app estará disponible en `https://localhost:5001` (o el puerto que indique la consola).
+La app MVC estara disponible en `https://localhost:5001`.  
+La API REST estara disponible en `http://localhost:5071`.
  
----
- 
-## Funcionalidades
- 
-- CRUD completo de Pacientes, Médicos y Citas
-- Filtrar citas por paciente
-- Persistencia en archivos JSON (sin base de datos)
-- Separación limpia de la lógica de dominio e infraestructura
----
 
 ## Capturas de pantalla
 
@@ -161,10 +188,16 @@ La app estará disponible en `https://localhost:5001` (o el puerto que indique l
 ### Privacy
 <img width="2504" height="1334" alt="Captura de pantalla 2026-06-05 225209" src="https://github.com/user-attachments/assets/fc54ba7d-5a9c-4f62-9dc8-00e3a024cd4e" />
 
+### API REST- Pacientes JSON
+<img width="2542" height="1336" alt="Captura de pantalla 2026-06-27 110954" src="https://github.com/user-attachments/assets/32d44c17-2e4c-45d6-80ce-7f90dadd7a93" />
+
+
+### API REST- Citas JSON
+<img width="2558" height="1344" alt="Captura de pantalla 2026-06-27 110909" src="https://github.com/user-attachments/assets/b5bb8df0-ee1a-4f83-9c86-68aac5187611" />
+
+
 ---
 
 ## Uso de Inteligencia Artificial
 
-Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial
-(Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de
-estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
+Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial (Claude de Anthropic) como apoyo en la generacion de codigo, documentacion y revision de estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Diaz.
