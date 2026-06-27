@@ -38,24 +38,21 @@ Este proyecto sigue el patrón de **Arquitectura Hexagonal**, pues la lógica de
     +-----------------+          +-------------------+
 ```
 
-
+Lo importante: el agregar *CitasApp-Api* no se tocó ni una línea de *CitasApp.Domain* ni de *CitasApp.Infrastructure*. El nuevo adaptador simplemente implementó el mismo puerto de entrada que ya existía.
 
 ### Responsabilidades por capa
  
-**`CitasApp.Domain`** — el hexágono interno. Contiene:
-- Modelos de dominio: `Cita`, `Medico`, `Paciente`
-- Interfaces de puertos: `ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`
-Este proyecto **no tiene dependencias** hacia infraestructura ni ASP.NET. Define *qué* necesita la aplicación, no *cómo* se hace.
+**`CitasApp.Domain`** — el núcleo del proyecto. Contiene modelos de dominicio (*Cita, Médico, Paciente*) e interfaces de puertos (*ICitaRepository, IMedicoRepository, IPacienteRepository*). Sin dependencias hacia infraestructura ni ASP.NET.
+
+**`CitasApp.Application`** — servicios de aplicacion (`CitaService`, `MedicoService`, `PacienteService`). Orquestan la logica de negocio usando solo las interfaces del dominio.
  
-**`CitasApp.Infrastructure`** — la capa de adaptadores. Contiene:
-- `JsonCitaRepository`, `JsonMedicoRepository`, `JsonPacienteRepository`
-Estas clases implementan las interfaces del dominio usando persistencia en archivos JSON. Son el único lugar donde viven las preocupaciones de I/O. Cambiar a una base de datos solo requiere agregar un nuevo adaptador aquí — el dominio no se toca.
+**`CitasApp.Infrastructure`** — adaptadores de salida. Implementa las interfaces del dominio con persistencia en JSON, CSV o SQLite. Reemplazar la base de datos no requiere tocar el dominio.
  
-**`CitasApp` (Web)** — el punto de entrada y capa de presentación. Contiene:
-- Controladores MVC y vistas Razor de ASP.NET Core
-- Registro de dependencias en `Program.cs`
-El proyecto Web depende de `Domain` (para las interfaces) e `Infrastructure` (para registrar las implementaciones concretas). Los controladores dependen únicamente de las interfaces del dominio, nunca directamente de infraestructura.
+**`CitasApp` (Web)** — adaptador de entrada MVC. Expone la funcionalidad via controladores Razor y vistas Bootstrap.
  
+**`CitasApp.Api`** — adaptador de entrada REST. Expone la misma funcionalidad via endpoints HTTP/JSON, usando los mismos servicios de aplicacion.
+
+
 ### Diagrama de dependencias
  
 ```
