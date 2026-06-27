@@ -45,72 +45,42 @@ CitasApp.Web  ──┐
 CitasApp.Api  ──┘         │                        ▲
                            └──► CitasApp.Infrastructure ┘
 ```
- 
-## Stack Tecnológico
- 
-- .NET 10
-- ASP.NET Core MVC
-- Bootstrap 5
-- Persistencia en archivos JSON (`System.Text.Json`)
+
 ---
  
-## Estructura del Proyecto
+## Endpoints de la API
  
-```
-ArqSoft-S05-Giovana-hexagonal/
-├── CitasApp.Domain/
-│   ├── Interfaces/
-│   │   ├── ICitaRepository.cs
-│   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
-│   └── Models/
-│       ├── Cita.cs
-│       ├── Medico.cs
-│       └── Paciente.cs
-├── CitasApp.Infrastructure/
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       └── JsonPacienteRepository.cs
-└── CitasApp/ (Web)
-    ├── Controllers/
-    │   ├── CitaController.cs
-    │   ├── MedicoController.cs
-    │   ├── PacienteController.cs
-    │   └── HomeController.cs
-    ├── Views/
-    ├── data/
-    │   ├── citas.json
-    │   ├── medicos.json
-    │   └── pacientes.json
-    └── Program.cs
-```
+### Calculadora — `GET /api/calculadora`
  
----
+| Endpoint                              | Descripción            | Ejemplo de respuesta                                      |
+|---------------------------------------|------------------------|-----------------------------------------------------------|
+| `GET /api/calculadora/sumar?a=5&b=3`  | Suma dos números       | `{ "operacion": "suma", "a": 5, "b": 3, "resultado": 8 }` |
+| `GET /api/calculadora/restar?a=5&b=3` | Resta dos números      | `{ "operacion": "resta", "a": 5, "b": 3, "resultado": 2 }` |
+| `GET /api/calculadora/multiplicar?a=4&b=2` | Multiplica       | `{ "operacion": "multiplicacion", "a": 4, "b": 2, "resultado": 8 }` |
+| `GET /api/calculadora/dividir?a=10&b=2` | Divide (valida ÷0) | `{ "operacion": "division", "a": 10, "b": 2, "resultado": 5 }` |
+
+### Pacientes — `GET /api/pacientes`
  
-## Cómo ejecutar
+| Endpoint                    | Descripción                   |
+|-----------------------------|-------------------------------|
+| `GET /api/pacientes`        | Lista todos los pacientes     |
+| `GET /api/pacientes/{id}`   | Obtiene un paciente por ID    |
  
-**Requisito:** .NET 10 SDK
+### Médicos — `GET /api/medicos`
  
-```bash
-# Clonar el repositorio
-git clone https://github.com/GiovanaTSW/CitasApp.git
-cd ArqSoft-S05-Giovana-hexagonal
+| Endpoint                  | Descripción                 |
+|---------------------------|-----------------------------|
+| `GET /api/medicos`        | Lista todos los médicos     |
+| `GET /api/medicos/{id}`   | Obtiene un médico por ID    |
+
+### Citas — `GET /api/citas`
  
-# Ejecutar la aplicación
-dotnet run --project CitasApp
-```
+| Endpoint                              | Descripción                          |
+|---------------------------------------|--------------------------------------|
+| `GET /api/citas`                      | Lista todas las citas                |
+| `GET /api/citas/porpaciente/{id}`     | Filtra citas por ID de paciente      |
  
-La app estará disponible en `https://localhost:5001` (o el puerto que indique la consola).
- 
----
- 
-## Funcionalidades
- 
-- CRUD completo de Pacientes, Médicos y Citas
-- Filtrar citas por paciente
-- Persistencia en archivos JSON (sin base de datos)
-- Separación limpia de la lógica de dominio e infraestructura
+
 ---
 
 ## Capturas de pantalla
