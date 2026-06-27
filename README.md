@@ -140,10 +140,13 @@ La API REST estará disponible en `https://localhost:7030`.
  
 ## Funcionalidades
  
-- CRUD completo de Pacientes, Médicos y Citas
-- Filtrar citas por paciente
-- Persistencia en archivos JSON (sin base de datos)
-- Separación limpia de la lógica de dominio e infraestructura
+- CRUD completo de Pacientes, Médicos y Citas (MVC y API REST)
+- Notificaciones por Email y SMS al crear/modificar citas (Observer)
+- Logging automático de operaciones sobre pacientes (Decorator)
+- Selección de repositorio por entorno (Factory Method)
+- Soporte para persistencia en JSON, CSV y SQLite
+- Arquitectura hexagonal con puertos y adaptadores
+
 ---
 
 ## Capturas de pantalla
@@ -167,6 +170,4 @@ La API REST estará disponible en `https://localhost:7030`.
 
 ## Uso de Inteligencia Artificial
 
-Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial
-(Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de
-estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
+Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial (Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
