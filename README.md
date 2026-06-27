@@ -1,7 +1,7 @@
-# CitasApp
+# CitasApp — Rama `gof`
  
-Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes. Esta versión migra de una **arquitectura monolítica por capas** a una **Arquitectura Hexagonal (Puertos y Adaptadores)**, separando el núcleo del dominio de la infraestructura y la presentación.
- 
+Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes.  
+Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres **patrones de diseño GoF**: Factory Method, Observer y Decorator. También se agrega una API REST (`CitasApp.Api`) y soporte para múltiples adaptadores de persistencia (JSON, CSV, SQLite).
 ---
  
 ## Arquitectura
