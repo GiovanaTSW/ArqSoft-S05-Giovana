@@ -11,9 +11,8 @@ CitasApp permite registrar y consultar pacientes, médicos y citas médicas. La 
 - **CitasApp** (MVC): interfaz web con vistas Razor y Bootstrap
 - **CitasApp.Api** (REST): endpoints JSON consumibles por cualquier cliente HTTP
 Ambos proyectos comparten los mismos servicios de aplicación e infraestructura gracias a la **arquitectura hexagonal (Puertos y Adaptadores)**.
-
-
-```
+ 
+---
  
 ## Tecnologías usadas
  
@@ -23,109 +22,108 @@ Ambos proyectos comparten los mismos servicios de aplicación e infraestructura 
 - Bootstrap 5
 - `System.Text.Json`
 - Persistencia en archivos JSON, CSV y SQLite
-
---- 
+---
  
 ## Arquitectura
  
 ```
-CitasApp (Solución)
-├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
-├── CitasApp.Application     # Servicios de aplicación (CitaService, MedicoService, PacienteService)
-├── CitasApp.Infrastructure  # Adaptadores — repositorios JSON / CSV / SQLite
-├── CitasApp (Web)           # Presentación MVC
-└── CitasApp.Api             # Presentación REST
+CitasApp (Solucion)
+  CitasApp.Domain          - Nucleo: entidades e interfaces de puertos
+  CitasApp.Application     - Servicios de aplicacion
+  CitasApp.Infrastructure  - Adaptadores: repositorios JSON / CSV / SQLite
+  CitasApp (Web)           - Presentacion MVC
+  CitasApp.Api             - Presentacion REST
 ```
-
+ 
 ### Diagrama de dependencias
  
 ```
-CitasApp.Web  ──┐
-                ├──► CitasApp.Application ──► CitasApp.Domain
-CitasApp.Api  ──┘         │                        ▲
-                           └──► CitasApp.Infrastructure ┘
+CitasApp.Web  ---+
+                 +---> CitasApp.Application ---> CitasApp.Domain
+CitasApp.Api  ---+              |                      ^
+                                +---> CitasApp.Infrastructure ---+
 ```
-
+ 
 ---
  
 ## Endpoints de la API
  
 ### Calculadora — `GET /api/calculadora`
  
-| Endpoint                              | Descripción            | Ejemplo de respuesta                                      |
-|---------------------------------------|------------------------|-----------------------------------------------------------|
-| `GET /api/calculadora/sumar?a=5&b=3`  | Suma dos números       | `{ "operacion": "suma", "a": 5, "b": 3, "resultado": 8 }` |
-| `GET /api/calculadora/restar?a=5&b=3` | Resta dos números      | `{ "operacion": "resta", "a": 5, "b": 3, "resultado": 2 }` |
-| `GET /api/calculadora/multiplicar?a=4&b=2` | Multiplica       | `{ "operacion": "multiplicacion", "a": 4, "b": 2, "resultado": 8 }` |
-| `GET /api/calculadora/dividir?a=10&b=2` | Divide (valida ÷0) | `{ "operacion": "division", "a": 10, "b": 2, "resultado": 5 }` |
-
-### Pacientes — `GET /api/pacientes`
+| Endpoint | Descripción | Ejemplo de respuesta |
+|---|---|---|
+| `GET /api/calculadora/sumar?a=5&b=3` | Suma dos números | `{ "operacion": "suma", "resultado": 8 }` |
+| `GET /api/calculadora/restar?a=5&b=3` | Resta dos números | `{ "operacion": "resta", "resultado": 2 }` |
+| `GET /api/calculadora/multiplicar?a=4&b=2` | Multiplica | `{ "operacion": "multiplicacion", "resultado": 8 }` |
+| `GET /api/calculadora/dividir?a=10&b=2` | Divide (valida div/0) | `{ "operacion": "division", "resultado": 5 }` |
  
-| Endpoint                    | Descripción                   |
-|-----------------------------|-------------------------------|
-| `GET /api/pacientes`        | Lista todos los pacientes     |
-| `GET /api/pacientes/{id}`   | Obtiene un paciente por ID    |
+### Pacientes — `/api/pacientes`
  
-### Médicos — `GET /api/medicos`
+| Endpoint | Descripción |
+|---|---|
+| `GET /api/pacientes` | Lista todos los pacientes |
+| `GET /api/pacientes/{id}` | Obtiene un paciente por ID |
  
-| Endpoint                  | Descripción                 |
-|---------------------------|-----------------------------|
-| `GET /api/medicos`        | Lista todos los médicos     |
-| `GET /api/medicos/{id}`   | Obtiene un médico por ID    |
-
-### Citas — `GET /api/citas`
+### Médicos — `/api/medicos`
  
-| Endpoint                              | Descripción                          |
-|---------------------------------------|--------------------------------------|
-| `GET /api/citas`                      | Lista todas las citas                |
-| `GET /api/citas/porpaciente/{id}`     | Filtra citas por ID de paciente      |
+| Endpoint | Descripción |
+|---|---|
+| `GET /api/medicos` | Lista todos los médicos |
+| `GET /api/medicos/{id}` | Obtiene un médico por ID |
+ 
+### Citas — `/api/citas`
+ 
+| Endpoint | Descripción |
+|---|---|
+| `GET /api/citas` | Lista todas las citas |
+| `GET /api/citas/porpaciente/{id}` | Filtra citas por ID de paciente |
  
 ---
-
+ 
 ## Estructura del proyecto
  
 ```
 ArqSoft-S05-Giovana-Api-Calculadora/
-├── CitasApp.Domain/
-│   ├── Interfaces/
-│   │   ├── ICitaRepository.cs
-│   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
-│   └── Models/
-│       ├── Cita.cs
-│       ├── Medico.cs
-│       └── Paciente.cs
-├── CitasApp.Application/
-│   └── Service/
-│       ├── CitaService.cs
-│       ├── MedicoService.cs
-│       └── PacienteService.cs
-├── CitasApp.Infrastructure/
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       ├── JsonPacienteRepository.cs
-│       ├── CsvCitaRepository.cs
-│       ├── CsvMedicoRepository.cs
-│       ├── CsvPacienteRepository.cs
-│       ├── SqliteCitaRepository.cs
-│       ├── SqliteMedicoRepository.cs
-│       └── SqlitePacienteRepository.cs
-├── CitasApp/ (Web)
-│   ├── Controllers/
-│   ├── Views/
-│   └── Program.cs
-└── CitasApp.Api/
-    ├── Controllers/
-    │   ├── CalculadoraController.cs
-    │   ├── CitasController.cs
-    │   ├── MedicosController.cs
-    │   └── PacientesController.cs
-    └── Program.cs
+  CitasApp.Domain/
+    Interfaces/
+      ICitaRepository.cs
+      IMedicoRepository.cs
+      IPacienteRepository.cs
+    Models/
+      Cita.cs
+      Medico.cs
+      Paciente.cs
+  CitasApp.Application/
+    Service/
+      CitaService.cs
+      MedicoService.cs
+      PacienteService.cs
+  CitasApp.Infrastructure/
+    Repositories/
+      JsonCitaRepository.cs
+      JsonMedicoRepository.cs
+      JsonPacienteRepository.cs
+      CsvCitaRepository.cs
+      CsvMedicoRepository.cs
+      CsvPacienteRepository.cs
+      SqliteCitaRepository.cs
+      SqliteMedicoRepository.cs
+      SqlitePacienteRepository.cs
+  CitasApp/ (Web)
+    Controllers/
+    Views/
+    Program.cs
+  CitasApp.Api/
+    Controllers/
+      CalculadoraController.cs
+      CitasController.cs
+      MedicosController.cs
+      PacientesController.cs
+    Program.cs
 ```
-
+ 
 ---
-
+ 
 ## Cómo ejecutar
  
 **Requisito:** .NET 10 SDK
@@ -142,11 +140,12 @@ dotnet run --project CitasApp
 # En otra terminal, ejecutar la API REST
 dotnet run --project CitasApp.Api
 ```
-
+ 
 La app MVC estará disponible en `https://localhost:5001`.  
 La API REST estará disponible en `http://localhost:5071`.
  
 **Probar la calculadora desde el navegador:**
+ 
 ```
 http://localhost:5071/api/calculadora/sumar?a=10&b=5
 http://localhost:5071/api/calculadora/dividir?a=20&b=4
