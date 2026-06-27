@@ -1,18 +1,37 @@
-# CitasApp
+# CitasApp — Rama `hexagonal`
  
-Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes. Esta versión migra de una **arquitectura monolítica por capas** a una **Arquitectura Hexagonal (Puertos y Adaptadores)**, separando el núcleo del dominio de la infraestructura y la presentación.
+Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes, construida sobre **Arquitectura Hexagonal (Puertos y Adaptadores)**. Esta rama migra de una arquitectura monolítica por capas a un diseño donde el núcleo de dominio está completamente aislado de la infraestructura y la presentación.
  
 ---
  
-## Arquitectura
+## Arquitectura Hexagonal
  
-Este proyecto sigue el patrón de **Arquitectura Hexagonal** (también conocido como Puertos y Adaptadores), introducido por Alistair Cockburn. La idea central es que la lógica de dominio se ubica en el centro y se comunica con el exterior únicamente a través de interfaces bien definidas (puertos), con implementaciones concretas (adaptadores) provistas por la capa de infraestructura.
+Este proyecto sigue el patrón introducido por Alistair Cockburn. La lógica de dominio vive en el centro del hexágono y se comunica con el exterior únicamente a través de **puertos** (interfaces). Los **adaptadores** son las implementaciones concretas que conectan el mundo exterior con esos puertos.
  
 ```
-CitasApp (Solución)
-├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
-├── CitasApp.Infrastructure  # Adaptadores — repositorios en archivos JSON
-└── CitasApp (Web)           # Presentación — controladores, vistas, inyección de dependencias
+                    +------------------+
+                    |  CitasApp.Domain |
+                    |  (el hexagono)   |
+                    |                  |
+                    | - Cita           |
+                    | - Medico         |
+                    | - Paciente       |
+                    | - IRepository    |
+                    +--------+---------+
+                             |
+              implementan las interfaces
+                             |
+                    +--------+---------+
+                    | CitasApp.         |
+                    | Infrastructure   |
+                    | JSON/CSV/SQLite  |
+                    +--------+---------+
+                             |
+                    +--------+---------+
+                    | CitasApp (Web)   |
+                    | Adaptador MVC    |
+                    | (puerto entrada) |
+                    +------------------+
 ```
  
 ### Responsabilidades por capa
