@@ -80,7 +80,77 @@ CitasApp.Api  ──┘         │                        ▲
 | `GET /api/citas`                      | Lista todas las citas                |
 | `GET /api/citas/porpaciente/{id}`     | Filtra citas por ID de paciente      |
  
+---
 
+## Estructura del proyecto
+ 
+```
+ArqSoft-S05-Giovana-Api-Calculadora/
+├── CitasApp.Domain/
+│   ├── Interfaces/
+│   │   ├── ICitaRepository.cs
+│   │   ├── IMedicoRepository.cs
+│   │   └── IPacienteRepository.cs
+│   └── Models/
+│       ├── Cita.cs
+│       ├── Medico.cs
+│       └── Paciente.cs
+├── CitasApp.Application/
+│   └── Service/
+│       ├── CitaService.cs
+│       ├── MedicoService.cs
+│       └── PacienteService.cs
+├── CitasApp.Infrastructure/
+│   └── Repositories/
+│       ├── JsonCitaRepository.cs
+│       ├── JsonMedicoRepository.cs
+│       ├── JsonPacienteRepository.cs
+│       ├── CsvCitaRepository.cs
+│       ├── CsvMedicoRepository.cs
+│       ├── CsvPacienteRepository.cs
+│       ├── SqliteCitaRepository.cs
+│       ├── SqliteMedicoRepository.cs
+│       └── SqlitePacienteRepository.cs
+├── CitasApp/ (Web)
+│   ├── Controllers/
+│   ├── Views/
+│   └── Program.cs
+└── CitasApp.Api/
+    ├── Controllers/
+    │   ├── CalculadoraController.cs
+    │   ├── CitasController.cs
+    │   ├── MedicosController.cs
+    │   └── PacientesController.cs
+    └── Program.cs
+```
+
+---
+
+## Cómo ejecutar
+ 
+**Requisito:** .NET 10 SDK
+ 
+```bash
+# Clonar el repositorio y cambiar a la rama
+git clone https://github.com/GiovanaTSW/CitasApp.git
+cd CitasApp
+git checkout api-calculadora
+ 
+# Ejecutar la app MVC
+dotnet run --project CitasApp
+ 
+# En otra terminal, ejecutar la API REST
+dotnet run --project CitasApp.Api
+```
+
+La app MVC estará disponible en `https://localhost:5001`.  
+La API REST estará disponible en `http://localhost:5071`.
+ 
+**Probar la calculadora desde el navegador:**
+```
+http://localhost:5071/api/calculadora/sumar?a=10&b=5
+http://localhost:5071/api/calculadora/dividir?a=20&b=4
+```
 ---
 
 ## Capturas de pantalla
@@ -100,10 +170,11 @@ CitasApp.Api  ──┘         │                        ▲
 ### Privacy
 <img width="2504" height="1334" alt="Captura de pantalla 2026-06-05 225209" src="https://github.com/user-attachments/assets/fc54ba7d-5a9c-4f62-9dc8-00e3a024cd4e" />
 
+### API REST — Calculadora (sumar)
+
+
 ---
 
 ## Uso de Inteligencia Artificial
 
-Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial
-(Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de
-estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
+Durante el desarrollo de este proyecto se utilizaron herramientas de inteligencia artificial (Claude de Anthropic) como apoyo en la generación de código, documentación y revisión de estructura. Todo el contenido fue revisado, validado e integrado por la autora del proyecto, Giovana Díaz.
