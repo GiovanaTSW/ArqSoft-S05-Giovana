@@ -103,13 +103,67 @@ El dominio y los servicios de CitasApp.Aplication no se tocan, sólo se realiza 
 
 ---
  
+## Estructura del proyecto
+ 
+```
+ArqSoft-S05-Giovana-hexagonal/
++-- CitasApp.Domain/
+|   +-- Interfaces/
+|   |   +-- ICitaRepository.cs
+|   |   +-- IMedicoRepository.cs
+|   |   +-- IPacienteRepository.cs
+|   +-- Models/
+|       +-- Cita.cs
+|       +-- Medico.cs
+|       +-- Paciente.cs
++-- CitasApp.Application/
+|   +-- Service/
+|       +-- CitaService.cs
+|       +-- MedicoService.cs
+|       +-- PacienteService.cs
++-- CitasApp.Infrastructure/
+|   +-- Repositories/
+|       +-- JsonCitaRepository.cs / CsvCitaRepository.cs / SqliteCitaRepository.cs
+|       +-- JsonMedicoRepository.cs / CsvMedicoRepository.cs / SqliteMedicoRepository.cs
+|       +-- JsonPacienteRepository.cs / CsvPacienteRepository.cs / SqlitePacienteRepository.cs
++-- CitasApp/ (Web)
+    +-- Controllers/
+    |   +-- CitaController.cs
+    |   +-- MedicoController.cs
+    |   +-- PacienteController.cs
+    |   +-- HomeController.cs
+    +-- Views/
+    +-- wwwroot/data/
+    |   +-- citas.csv / citas.json
+    |   +-- medicos.csv / medicos.json
+    |   +-- pacientes.csv / pacientes.json
+    +-- Program.cs
 
+```
+---
+
+ ## Como ejecutar
+ 
+**Requisito:** .NET 10 SDK
+ 
+```bash
+git clone https://github.com/GiovanaTSW/CitasApp.git
+cd CitasApp
+git checkout hexagonal
+ 
+dotnet run --project CitasApp
+```
+ 
+La app estara disponible en `https://localhost:5001` (o el puerto que indique la consola).
  
 ---
  
+## Funcionalidades
  
----
- 
+- CRUD completo de Pacientes, Medicos y Citas
+- Filtrar citas por paciente
+- Tres adaptadores de persistencia intercambiables: JSON, CSV y SQLite
+- Separacion limpia de dominio, aplicacion, infraestructura y presentacion
 
 ---
 
