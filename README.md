@@ -18,54 +18,24 @@ CitasApp.Infrastructure/
 ### Observer — notificaciones de citas
 Al crear o modificar una cita, se notifica automáticamente a todos los observadores registrados (SMS y Email). El servicio de dominio no depende de los observadores concretos, solo de la interfaz `ICitaObserver`.
 
-
-
-
-
-
-
-
-
-### Responsabilidades por capa
+```
+CitasApp.Domain/Interfaces/
+└── ICitaObserver.cs
  
-**`CitasApp.Domain`** — el hexágono interno. Contiene:
-- Modelos de dominio: `Cita`, `Medico`, `Paciente`
-- Interfaces de puertos: `ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`
-Este proyecto **no tiene dependencias** hacia infraestructura ni ASP.NET. Define *qué* necesita la aplicación, no *cómo* se hace.
- 
-**`CitasApp.Infrastructure`** — la capa de adaptadores. Contiene:
-- `JsonCitaRepository`, `JsonMedicoRepository`, `JsonPacienteRepository`
-Estas clases implementan las interfaces del dominio usando persistencia en archivos JSON. Son el único lugar donde viven las preocupaciones de I/O. Cambiar a una base de datos solo requiere agregar un nuevo adaptador aquí — el dominio no se toca.
- 
-**`CitasApp` (Web)** — el punto de entrada y capa de presentación. Contiene:
-- Controladores MVC y vistas Razor de ASP.NET Core
-- Registro de dependencias en `Program.cs`
-El proyecto Web depende de `Domain` (para las interfaces) e `Infrastructure` (para registrar las implementaciones concretas). Los controladores dependen únicamente de las interfaces del dominio, nunca directamente de infraestructura.
- 
-### Diagrama de dependencias
+CitasApp.Infrastructure/Observers/
+├── EmailObserver.cs
+└── SmsObserver.cs
+```
+
+### Decorator — `LoggingPacienteRepository`
+Envuelve cualquier implementación de `IPacienteRepository` y agrega logging con timestamp sin modificar la implementación base. Se puede apilar sobre JSON, CSV o SQLite sin cambiar el dominio.
  
 ```
-CitasApp.Web ──────────────► CitasApp.Domain
-      │                            ▲
-      └──► CitasApp.Infrastructure ┘
+CitasApp.Infrastructure/Repositories/
+└── LoggingPacienteRepository.cs
 ```
  
-Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero los controladores solo interactúan con los puertos del Domain.
- 
 ---
- 
-## Migración Arquitectónica
- 
-| Aspecto | Anterior (Capas) | Actual (Hexagonal) |
-|---|---|---|
-| Estructura | Proyecto único, carpetas por capa | Tres proyectos separados |
-| Aislamiento del dominio | Dominio mezclado con infraestructura | Domain no tiene dependencias externas |
-| Ubicación de interfaces | Capa de infraestructura | Capa de dominio (puertos) |
-| Cambio de persistencia | Requiere refactorizar controladores | Solo se reemplaza el adaptador |
-| Testabilidad | Difícil de mockear | Se inyecta cualquier adaptador vía DI |
- 
----
- 
 ## Stack Tecnológico
  
 - .NET 10
