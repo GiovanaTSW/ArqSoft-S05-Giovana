@@ -51,92 +51,66 @@ Este proyecto sigue el patrón introducido por Alistair Cockburn. La lógica de 
 ### Diagrama de dependencias
  
 ```
-CitasApp.Web ──────────────► CitasApp.Domain
-      │                            ▲
-      └──► CitasApp.Infrastructure ┘
+CitasApp.Web ---> CitasApp.Application ---> CitasApp.Domain
+                         |                       ^
+                         +---> CitasApp.Infrastructure ---+
 ```
- 
-Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero los controladores solo interactúan con los puertos del Domain.
- 
+
 ---
  
+## Intercambio de persistencia
+
+Para este proyecto se integró diferentes formas para aplicar la persistencia que son:
+- Formato JSON
+- Formato csv
+- Formato SQLite
+
+El adaptador activo se controla con un solo comentario en 'Program.cs':
+
+```csharp
+// Bloque A - JSON
+// builder.Services.AddSingleton<IPacienteRepository>(_ => new JsonPacienteRepository(...));
+ 
+// Bloque B - CSV  <-- activo por defecto
+builder.Services.AddSingleton<IPacienteRepository>(_ => new CsvPacienteRepository(...));
+ 
+// Bloque C - SQLite
+// builder.Services.AddSingleton<IPacienteRepository>(_ => new SqlitePacienteRepository(...));
+```
+
+El dominio y los servicios de CitasApp.Aplication no se tocan, sólo se realiza el cambio en Program.cs.
+
+---
+
 ## Migración Arquitectónica
  
-| Aspecto | Anterior (Capas) | Actual (Hexagonal) |
-|---|---|---|
-| Estructura | Proyecto único, carpetas por capa | Tres proyectos separados |
-| Aislamiento del dominio | Dominio mezclado con infraestructura | Domain no tiene dependencias externas |
-| Ubicación de interfaces | Capa de infraestructura | Capa de dominio (puertos) |
-| Cambio de persistencia | Requiere refactorizar controladores | Solo se reemplaza el adaptador |
-| Testabilidad | Difícil de mockear | Se inyecta cualquier adaptador vía DI |
+| Aspecto              | Anterior (Capas)                    | Actual (Hexagonal)                    |
+|----------------------|-------------------------------------|---------------------------------------|
+| Estructura           | Proyecto unico, carpetas por capa   | Cuatro proyectos separados            |
+| Aislamiento dominio  | Dominio mezclado con infraestructura| Domain sin dependencias externas      |
+| Ubicacion interfaces | Capa de infraestructura             | Capa de dominio (puertos)             |
+| Cambio persistencia  | Requiere refactorizar controladores | Solo se comenta/descomenta un bloque  |
+| Testabilidad         | Dificil de mockear                  | Se inyecta cualquier adaptador via DI |
  
 ---
- 
+
 ## Stack Tecnológico
  
 - .NET 10
 - ASP.NET Core MVC
-- Bootstrap 5
-- Persistencia en archivos JSON (`System.Text.Json`)
+- `System.Text.Json`
+- Persistencia en JSON, CSV y SQLite (intercambiable)
+
 ---
  
-## Estructura del Proyecto
- 
-```
-ArqSoft-S05-Giovana-hexagonal/
-├── CitasApp.Domain/
-│   ├── Interfaces/
-│   │   ├── ICitaRepository.cs
-│   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
-│   └── Models/
-│       ├── Cita.cs
-│       ├── Medico.cs
-│       └── Paciente.cs
-├── CitasApp.Infrastructure/
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       └── JsonPacienteRepository.cs
-└── CitasApp/ (Web)
-    ├── Controllers/
-    │   ├── CitaController.cs
-    │   ├── MedicoController.cs
-    │   ├── PacienteController.cs
-    │   └── HomeController.cs
-    ├── Views/
-    ├── data/
-    │   ├── citas.json
-    │   ├── medicos.json
-    │   └── pacientes.json
-    └── Program.cs
-```
+
  
 ---
  
-## Cómo ejecutar
- 
-**Requisito:** .NET 10 SDK
- 
-```bash
-# Clonar el repositorio
-git clone https://github.com/GiovanaTSW/CitasApp.git
-cd ArqSoft-S05-Giovana-hexagonal
- 
-# Ejecutar la aplicación
-dotnet run --project CitasApp
-```
- 
-La app estará disponible en `https://localhost:5001` (o el puerto que indique la consola).
  
 ---
  
-## Funcionalidades
- 
-- CRUD completo de Pacientes, Médicos y Citas
-- Filtrar citas por paciente
-- Persistencia en archivos JSON (sin base de datos)
-- Separación limpia de la lógica de dominio e infraestructura
+
 ---
 
 ## Capturas de pantalla
