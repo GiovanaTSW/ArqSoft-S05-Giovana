@@ -26,29 +26,25 @@ Ambos proyectos comparten los mismos servicios de aplicación e infraestructura 
 
 --- 
  
+## Arquitectura
+ 
+```
+CitasApp (Solución)
+├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
+├── CitasApp.Application     # Servicios de aplicación (CitaService, MedicoService, PacienteService)
+├── CitasApp.Infrastructure  # Adaptadores — repositorios JSON / CSV / SQLite
+├── CitasApp (Web)           # Presentación MVC
+└── CitasApp.Api             # Presentación REST
+```
+
 ### Diagrama de dependencias
  
 ```
-CitasApp.Web ──────────────► CitasApp.Domain
-      │                            ▲
-      └──► CitasApp.Infrastructure ┘
+CitasApp.Web  ──┐
+                ├──► CitasApp.Application ──► CitasApp.Domain
+CitasApp.Api  ──┘         │                        ▲
+                           └──► CitasApp.Infrastructure ┘
 ```
- 
-Infrastructure implementa las interfaces de Domain. Web depende de ambos, pero los controladores solo interactúan con los puertos del Domain.
- 
----
- 
-## Migración Arquitectónica
- 
-| Aspecto | Anterior (Capas) | Actual (Hexagonal) |
-|---|---|---|
-| Estructura | Proyecto único, carpetas por capa | Tres proyectos separados |
-| Aislamiento del dominio | Dominio mezclado con infraestructura | Domain no tiene dependencias externas |
-| Ubicación de interfaces | Capa de infraestructura | Capa de dominio (puertos) |
-| Cambio de persistencia | Requiere refactorizar controladores | Solo se reemplaza el adaptador |
-| Testabilidad | Difícil de mockear | Se inyecta cualquier adaptador vía DI |
- 
----
  
 ## Stack Tecnológico
  
