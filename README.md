@@ -56,25 +56,86 @@ CitasApp.Api ──────────────► CitasApp.Domain
       │                            ▲
       └──► CitasApp.Infrastructure ┘
 ```
- 
 
 ---
  
+## Stack tecnológico
+ 
+- .NET 10
+- ASP.NET Core MVC + Web API
+- Bootstrap 5
+- Persistencia: JSON (`System.Text.Json`), CSV, SQLite
+- Patrones: Factory Method, Observer, Decorator (GoF)
+---
+
+## Estructura del proyecto
+ 
+```
+ArqSoft-S05-Giovana-GOF/
+├── CitasApp.Domain/
+│   ├── Interfaces/
+│   │   ├── ICitaObserver.cs
+│   │   ├── ICitaRepository.cs
+│   │   ├── IMedicoRepository.cs
+│   │   └── IPacienteRepository.cs
+│   └── Models/
+│       ├── Cita.cs
+│       ├── Medico.cs
+│       └── Paciente.cs
+├── CitasApp.Infrastructure/
+│   ├── Observers/
+│   │   ├── EmailObserver.cs
+│   │   └── SmsObserver.cs
+│   └── Repositories/
+│       ├── RepositoryFactory.cs         ← Factory Method
+│       ├── LoggingPacienteRepository.cs ← Decorator
+│       ├── JsonCitaRepository.cs
+│       ├── JsonMedicoRepository.cs
+│       ├── JsonPacienteRepository.cs
+│       ├── CsvCitaRepository.cs
+│       ├── CsvMedicoRepository.cs
+│       ├── CsvPacienteRepository.cs
+│       ├── SqliteCitaRepository.cs
+│       ├── SqliteMedicoRepository.cs
+│       └── SqlitePacienteRepository.cs
+├── CitasApp.Application/
+│   └── Service/
+│       ├── CitaService.cs
+│       ├── MedicoService.cs
+│       └── PacienteService.cs
+├── CitasApp/ (Web)
+│   ├── Controllers/
+│   ├── Views/
+│   └── Program.cs
+└── CitasApp.Api/
+    ├── Controllers/
+    │   ├── CitasController.cs
+    │   ├── MedicosController.cs
+    │   └── PacientesController.cs
+    └── Program.cs
+```
+
 ## Cómo ejecutar
  
 **Requisito:** .NET 10 SDK
  
 ```bash
-# Clonar el repositorio
+# Clonar el repositorio y cambiar a la rama gof
 git clone https://github.com/GiovanaTSW/CitasApp.git
-cd ArqSoft-S05-Giovana-hexagonal
+cd CitasApp
+git checkout gof
  
-# Ejecutar la aplicación
+# Ejecutar la app MVC
 dotnet run --project CitasApp
+ 
+# O ejecutar la API REST
+dotnet run --project CitasApp.Api
 ```
  
-La app estará disponible en `https://localhost:5001` (o el puerto que indique la consola).
- 
+La app MVC estará disponible en `https://localhost:5001`.  
+La API REST estará disponible en `https://localhost:7030`.
+
+
 ---
  
 ## Funcionalidades
