@@ -1,35 +1,30 @@
-# CitasApp
+# CitasApp — Rama `api-calculadora`
  
-Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes. Esta versión migra de una **arquitectura monolítica por capas** a una **Arquitectura Hexagonal (Puertos y Adaptadores)**, separando el núcleo del dominio de la infraestructura y la presentación.
+Aplicación ASP.NET Core con dos proyectos de entrada: una app web MVC para gestionar citas médicas y una **API REST** (`CitasApp.Api`) que expone los mismos datos vía endpoints HTTP/JSON. Esta rama además incorpora un `CalculadoraController` que demuestra el uso básico de una Web API con parámetros de query.
  
 ---
  
-## Arquitectura
+## Descripción del proyecto
  
-Este proyecto sigue el patrón de **Arquitectura Hexagonal** (también conocido como Puertos y Adaptadores), introducido por Alistair Cockburn. La idea central es que la lógica de dominio se ubica en el centro y se comunica con el exterior únicamente a través de interfaces bien definidas (puertos), con implementaciones concretas (adaptadores) provistas por la capa de infraestructura.
+CitasApp permite registrar y consultar pacientes, médicos y citas médicas. La lógica de negocio vive en el núcleo de dominio (`CitasApp.Domain`) y se accede desde dos adaptadores de presentación independientes:
  
+- **CitasApp** (MVC): interfaz web con vistas Razor y Bootstrap
+- **CitasApp.Api** (REST): endpoints JSON consumibles por cualquier cliente HTTP
+Ambos proyectos comparten los mismos servicios de aplicación e infraestructura gracias a la **arquitectura hexagonal (Puertos y Adaptadores)**.
+
+
 ```
-CitasApp (Solución)
-├── CitasApp.Domain          # Núcleo — entidades e interfaces de puertos
-├── CitasApp.Infrastructure  # Adaptadores — repositorios en archivos JSON
-└── CitasApp (Web)           # Presentación — controladores, vistas, inyección de dependencias
-```
  
-### Responsabilidades por capa
+## Tecnologías usadas
  
-**`CitasApp.Domain`** — el hexágono interno. Contiene:
-- Modelos de dominio: `Cita`, `Medico`, `Paciente`
-- Interfaces de puertos: `ICitaRepository`, `IMedicoRepository`, `IPacienteRepository`
-Este proyecto **no tiene dependencias** hacia infraestructura ni ASP.NET. Define *qué* necesita la aplicación, no *cómo* se hace.
- 
-**`CitasApp.Infrastructure`** — la capa de adaptadores. Contiene:
-- `JsonCitaRepository`, `JsonMedicoRepository`, `JsonPacienteRepository`
-Estas clases implementan las interfaces del dominio usando persistencia en archivos JSON. Son el único lugar donde viven las preocupaciones de I/O. Cambiar a una base de datos solo requiere agregar un nuevo adaptador aquí — el dominio no se toca.
- 
-**`CitasApp` (Web)** — el punto de entrada y capa de presentación. Contiene:
-- Controladores MVC y vistas Razor de ASP.NET Core
-- Registro de dependencias en `Program.cs`
-El proyecto Web depende de `Domain` (para las interfaces) e `Infrastructure` (para registrar las implementaciones concretas). Los controladores dependen únicamente de las interfaces del dominio, nunca directamente de infraestructura.
+- .NET 10
+- ASP.NET Core MVC
+- ASP.NET Core Web API (`ControllerBase`)
+- Bootstrap 5
+- `System.Text.Json`
+- Persistencia en archivos JSON, CSV y SQLite
+
+--- 
  
 ### Diagrama de dependencias
  
