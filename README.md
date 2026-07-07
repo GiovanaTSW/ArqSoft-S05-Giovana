@@ -36,6 +36,8 @@ CitasApp.Infrastructure/Repositories/
 ```
  
 ## Arquitectura
+
+📐 Diagrama de componentes (C4 Nivel 3) del contenedor `CitasApp.Api`: [arquitectura.md](./arquitectura.md)
  
 ```
 CitasApp (Solución)
