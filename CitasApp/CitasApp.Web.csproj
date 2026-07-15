@@ -10,6 +10,8 @@
     <None Include="wwwroot\data\citas.csv" />
     <None Include="wwwroot\data\medicos.csv" />
     <None Include="wwwroot\data\pacientes.csv" />
+    <Content Remove="wwwroot\data\*.db" />
+    <None Include="wwwroot\data\*.db" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
   </ItemGroup>
 
 </Project>
