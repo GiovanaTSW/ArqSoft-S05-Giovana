@@ -5,7 +5,9 @@ Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres
 
  
 ## Deuda técnica dentro del proyecto
- 
+Se identificaron algunas deudas técnicas dentro del proyecto como incorporación de la base de datos y la falte de un Logging, pero ya fueron implementadas para mejores practicas y un proyecto más profesional.
+
+## Patrones Gof
 ### Factory Method — `RepositoryFactory`
 Centraliza la creación de repositorios según el entorno de ejecución. El código que consume los repositorios no necesita conocer qué implementación concreta se instancia.
  
@@ -177,6 +179,10 @@ La API REST estará disponible en `https://localhost:7030`.
 
 <img width="2560" height="1600" alt="Demostración de registros GET y POST_Giovana Díaz" src="https://github.com/user-attachments/assets/fa0341ed-f7ff-4688-a141-57bac4920c23" />
 
+## DEUDA TÉCNICA MEJORAS
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/0eb2491c-ece3-4dbf-a657-4ae62326c031" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/e79bfbeb-1292-46c2-9d19-7ed644272169" />
 
 ---
 
