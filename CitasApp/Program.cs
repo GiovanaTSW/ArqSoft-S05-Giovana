@@ -17,12 +17,14 @@ var dataFolder = Path.Combine(builder.Environment.WebRootPath, "data");
 Directory.CreateDirectory(dataFolder);
 
 // Rutas para CSV
+/*
 var csvPacientes = Path.Combine(dataFolder, "pacientes.csv");
 var csvMedicos = Path.Combine(dataFolder, "medicos.csv");
 var csvCitas = Path.Combine(dataFolder, "citas.csv");
+*/
 
 // Ruta para SQLite (un solo archivo .db para las 3 tablas)
-//var sqlitePath = Path.Combine(dataFolder, "citasapp.db");
+var sqlitePath = Path.Combine(dataFolder, "citasapp.db");
 
 
 // ── 2. Elige tus Adapters ─────────────────────────────────────────────────────
@@ -39,16 +41,17 @@ builder.Services.AddSingleton<IMedicoRepository>(_ => new JsonMedicoRepository(j
 builder.Services.AddSingleton<ICitaRepository>(_ => new JsonCitaRepository(jsonCitas));*/
 
 // ▶ Bloque B — CSV  ← activo ahora
+/*
 builder.Services.AddSingleton<IPacienteRepository>(_ => new CsvPacienteRepository(csvPacientes));
 builder.Services.AddSingleton<IMedicoRepository>(_ => new CsvMedicoRepository(csvMedicos));
 builder.Services.AddSingleton<ICitaRepository>(_ => new CsvCitaRepository(csvCitas));
+*/
 
 // ▶ Bloque C — SQLite
-/*
 builder.Services.AddSingleton<IPacienteRepository>(_ => new SqlitePacienteRepository(sqlitePath));
 builder.Services.AddSingleton<IMedicoRepository>  (_ => new SqliteMedicoRepository(sqlitePath));
 builder.Services.AddSingleton<ICitaRepository>    (_ => new SqliteCitaRepository(sqlitePath));
-*/
+
 
 
 // ── 3. Servicios de aplicación ───────────────────────────────────────────────
