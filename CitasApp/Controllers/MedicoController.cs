@@ -1,4 +1,4 @@
-﻿using CitasApp.Domain.Interfaces;
+﻿using CitasApp.Application.Services;
 using CitasApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +6,14 @@ namespace CitasApp.Web.Controllers
 {
     public class MedicoController : Controller
     {
-        private readonly IMedicoRepository _repo;
-        public MedicoController(IMedicoRepository repo) { _repo = repo; }
+        private readonly MedicoService _service;
+        public MedicoController(MedicoService service) { _service = service; }
 
-        public IActionResult Index() => View(_repo.ObtenerTodos());
+        public IActionResult Index() => View(_service.ObtenerTodos());
 
         public IActionResult Detalle(int id)
         {
-            var medico = _repo.ObtenerPorId(id);
+            var medico = _service.ObtenerPorId(id);
             return medico == null ? NotFound() : View(medico);
         }
 
@@ -26,28 +26,28 @@ namespace CitasApp.Web.Controllers
             if (!ModelState.IsValid)
                 return View(medico);
 
-            _repo.Agregar(medico);
+            _service.Agregar(medico);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Eliminar(int id)
         {
-            var medico = _repo.ObtenerPorId(id);
+            var medico = _service.ObtenerPorId(id);
             return medico == null ? NotFound() : View(medico);
         }
 
         [HttpPost, ActionName("Eliminar")]
         public IActionResult EliminarConfirmado(int id)
         {
-            _repo.Eliminar(id);
+            _service.Eliminar(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            var medico = _repo.ObtenerPorId(id);
+            var medico = _service.ObtenerPorId(id);
             return medico == null ? NotFound() : View(medico);
         }
 
@@ -57,7 +57,7 @@ namespace CitasApp.Web.Controllers
             if (!ModelState.IsValid)
                 return View(medico);
 
-            _repo.Actualizar(medico);
+            _service.Actualizar(medico);
             return RedirectToAction("Index");
         }
     }

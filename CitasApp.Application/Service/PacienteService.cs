@@ -27,5 +27,15 @@ namespace CitasApp.Application.Services
         {
             _repo.Agregar(paciente);
         }
+
+        public void Actualizar(Paciente paciente)
+        {
+            _repo.Actualizar(paciente);
+        }
+
+        public void Eliminar(int id)
+        {
+            _repo.Eliminar(id);
+        }
     }
 }

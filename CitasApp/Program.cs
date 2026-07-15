@@ -4,7 +4,7 @@
 // Domain y Application NO se tocan — solo cambia este archivo.
 // ─────────────────────────────────────────────────────────────────────────────
 
-//using CitasApp.Application.Services;
+using CitasApp.Application.Services;
 using CitasApp.Web.Controllers;
 using CitasApp.Domain.Interfaces;
 using CitasApp.Infrastructure.Repositories;
@@ -51,9 +51,10 @@ builder.Services.AddSingleton<ICitaRepository>    (_ => new SqliteCitaRepository
 */
 
 
-// ── 3. Servicios de aplicación (no cambian con el Adapter) ───────────────────
-// Si tienes servicios de aplicación, regístralos aquí. Ej:
-// builder.Services.AddScoped<MyApp.Services.PacienteService>();
+// ── 3. Servicios de aplicación ───────────────────────────────────────────────
+builder.Services.AddScoped<PacienteService>();
+builder.Services.AddScoped<MedicoService>();
+builder.Services.AddScoped<CitaService>();
 
 // ── 4. MVC ────────────────────────────────────────────────────────────────────
 // DESPUÉS

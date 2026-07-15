@@ -1,5 +1,4 @@
 ﻿using CitasApp.Domain.Interfaces;
-using CitasApp.Domain.Interfaces;
 using CitasApp.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +27,16 @@ namespace CitasApp.Application.Services
         public void Agregar(Cita cita)
         {
             _repo.Agregar(cita);
+        }
+
+        public void Actualizar(Cita cita)
+        {
+            _repo.Actualizar(cita);
+        }
+
+        public void Eliminar(int id)
+        {
+            _repo.Eliminar(id);
         }
 
         public Cita? Confirmar(int id)

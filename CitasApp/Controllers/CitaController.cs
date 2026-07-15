@@ -1,4 +1,4 @@
-﻿using CitasApp.Domain.Interfaces;
+﻿using CitasApp.Application.Services;
 using CitasApp.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,38 +6,41 @@ namespace CitasApp.Web.Controllers
 {
     public class CitaController : Controller
     {
-        private readonly ICitaRepository _citaRepo;
-        private readonly IPacienteRepository _pacienteRepo;
-        private readonly IMedicoRepository _medicoRepo;
+        private readonly CitaService _citaService;
+        private readonly PacienteService _pacienteService;
+        private readonly MedicoService _medicoService;
 
-        public CitaController(ICitaRepository citaRepo,
-                              IPacienteRepository pacienteRepo,
-                              IMedicoRepository medicoRepo)
+        public CitaController(CitaService citaService,
+                              PacienteService pacienteService,
+                              MedicoService medicoService)
         {
-            _citaRepo = citaRepo;
-            _pacienteRepo = pacienteRepo;
-            _medicoRepo = medicoRepo;
+            _citaService = citaService;
+            _pacienteService = pacienteService;
+            _medicoService = medicoService;
+        }
+
+        private void CargarViewBags()
+        {
+            ViewBag.Pacientes = _pacienteService.ObtenerTodos();
+            ViewBag.Medicos = _medicoService.ObtenerTodos();
         }
 
         public IActionResult Index()
         {
-            ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-            ViewBag.Medicos = _medicoRepo.ObtenerTodos();
-            return View(_citaRepo.ObtenerTodos());
+            CargarViewBags();
+            return View(_citaService.ObtenerTodos());
         }
 
         public IActionResult PorPaciente(int pacienteId)
         {
-            ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-            ViewBag.Medicos = _medicoRepo.ObtenerTodos();
-            return View(_citaRepo.ObtenerPorPaciente(pacienteId));
+            CargarViewBags();
+            return View(_citaService.ObtenerPorPaciente(pacienteId));
         }
 
         [HttpGet]
         public IActionResult AgregarCita()
         {
-            ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-            ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+            CargarViewBags();
             return View(new Cita());
         }
 
@@ -46,41 +49,38 @@ namespace CitasApp.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-                ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+                CargarViewBags();
                 return View(cita);
             }
 
-            _citaRepo.Agregar(cita);
+            _citaService.Agregar(cita);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Eliminar(int id)
         {
-            var cita = _citaRepo.ObtenerTodos().FirstOrDefault(c => c.Id == id);
+            var cita = _citaService.ObtenerTodos().FirstOrDefault(c => c.Id == id);
             if (cita == null) return NotFound();
 
-            ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-            ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+            CargarViewBags();
             return View(cita);
         }
 
         [HttpPost, ActionName("Eliminar")]
         public IActionResult EliminarConfirmado(int id)
         {
-            _citaRepo.Eliminar(id);
+            _citaService.Eliminar(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            var cita = _citaRepo.ObtenerTodos().FirstOrDefault(c => c.Id == id);
+            var cita = _citaService.ObtenerTodos().FirstOrDefault(c => c.Id == id);
             if (cita == null) return NotFound();
 
-            ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-            ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+            CargarViewBags();
             return View(cita);
         }
 
@@ -89,12 +89,11 @@ namespace CitasApp.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
-                ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+                CargarViewBags();
                 return View(cita);
             }
 
-            _citaRepo.Actualizar(cita);
+            _citaService.Actualizar(cita);
             return RedirectToAction("Index");
         }
     }
