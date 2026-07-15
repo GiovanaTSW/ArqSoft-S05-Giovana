@@ -5,7 +5,7 @@ Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres
 
  
 ## Deuda técnica dentro del proyecto
-Se identificaron algunas deudas técnicas dentro del proyecto como incorporación de la base de datos y la falte de un Logging, pero ya fueron implementadas para mejores practicas y un proyecto más profesional.
+Se identificaron algunas deudas técnicas dentro del proyecto como incorporación de la base de datos y la falta de un Login, pero ya han sido implementadas para mejores practicas y un proyecto más profesional.
 
 ## Patrones Gof
 ### Factory Method — `RepositoryFactory`
