@@ -184,6 +184,8 @@ La API REST estará disponible en `https://localhost:7030`.
 
 <img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/e79bfbeb-1292-46c2-9d19-7ed644272169" />
 
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/a7b917b0-6b4a-43fe-befa-26b3846524b8" />
+
 ---
 
 ## Uso de Inteligencia Artificial
