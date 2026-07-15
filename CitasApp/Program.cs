@@ -9,6 +9,7 @@ using CitasApp.Web.Controllers;
 using CitasApp.Domain.Interfaces;
 using CitasApp.Infrastructure.Repositories;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ── 1. Carpeta de datos ───────────────────────────────────────────────────────
