@@ -1,10 +1,10 @@
-# CitasApp — Rama `gof`
+# CitasApp — Rama `deuda-tecnica`
 
 Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes.  
-Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres **patrones de diseño GoF**: Factory Method, Observer y Decorator. También se agrega una API REST (`CitasApp.Api`) y soporte para múltiples adaptadores de persistencia (JSON, CSV, SQLite).
+Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres un diagrama de los niveles C4.
 
  
-## Patrones GoF implementados
+## Deuda técnica dentro del proyecto
  
 ### Factory Method — `RepositoryFactory`
 Centraliza la creación de repositorios según el entorno de ejecución. El código que consume los repositorios no necesita conocer qué implementación concreta se instancia.
