@@ -51,6 +51,7 @@ builder.Services.AddSingleton<ICitaRepository>(_ => new CsvCitaRepository(csvCit
 builder.Services.AddSingleton<IPacienteRepository>(_ => new SqlitePacienteRepository(sqlitePath));
 builder.Services.AddSingleton<IMedicoRepository>  (_ => new SqliteMedicoRepository(sqlitePath));
 builder.Services.AddSingleton<ICitaRepository>    (_ => new SqliteCitaRepository(sqlitePath));
+builder.Services.AddSingleton<IUsuarioRepository>(_ => new SqliteUsuarioRepository(sqlitePath));
 
 
 
@@ -58,10 +59,22 @@ builder.Services.AddSingleton<ICitaRepository>    (_ => new SqliteCitaRepository
 builder.Services.AddScoped<PacienteService>();
 builder.Services.AddScoped<MedicoService>();
 builder.Services.AddScoped<CitaService>();
+builder.Services.AddScoped<UsuarioService>();
 
-// ── 4. MVC ────────────────────────────────────────────────────────────────────
-// DESPUÉS
-builder.Services.AddControllersWithViews()
+// ── 4. Session ────────────────────────────────────────────────────────────────
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// ── 5. MVC ────────────────────────────────────────────────────────────────────
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new CitasApp.Web.Filters.SessionAuthorizeFilter());
+})
     .AddApplicationPart(typeof(CitasApp.Web.Controllers.CitaController).Assembly);
 
 var app = builder.Build();
@@ -75,6 +88,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
