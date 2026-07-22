@@ -16,7 +16,7 @@ namespace CitasApp.Tests
             medico.Nombre = "Dra. Smith";
 
             // Assert
-            Assert.Equal("Dra. Smith", medico.Nombre);
+            Assert.Equal("Dra. Kassandra", medico.Nombre);
         }
     }
 }
