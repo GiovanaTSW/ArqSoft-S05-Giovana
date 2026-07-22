@@ -11,7 +11,7 @@ jobs:
       - name: Configurar .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '18.7.2'
+          dotnet-version: '9.0.x'
 
       - name: Restaurar
         run: dotnet restore
