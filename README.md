@@ -1,9 +1,31 @@
-# CitasApp — Rama `gof`
+# CitasApp — Rama `CI/CD`
 
 Aplicación web ASP.NET Core MVC para gestionar citas médicas, médicos y pacientes.  
-Esta rama extiende la arquitectura hexagonal de la rama anterior integrando tres **patrones de diseño GoF**: Factory Method, Observer y Decorator. También se agrega una API REST (`CitasApp.Api`) y soporte para múltiples adaptadores de persistencia (JSON, CSV, SQLite).
+Esta rama extiende una API REST (`CitasApp.Api`), soporte para múltiples adaptadores de persistencia y un pipeline de **Integración Continua (CI)** automatizado con pruebas unitarias.
 
- 
+---
+
+## Pruebas Unitarias y Pipeline CI (Integración Continua)
+
+Se añadió un proyecto de pruebas unitarias (`CitasApp.Tests`) utilizando **xUnit** bajo el patrón **Arrange-Act-Assert (AAA)** para asegurar componentes críticos del dominio e infraestructura. 
+
+Además, se configuró un flujo automatizado de **Integración Continua (CI)** mediante **GitHub Actions** en la ruta `.github/workflows/ci.yml`, el cual se encarga de:
+1. Restaurar dependencias de la solución en un entorno limpio (`ubuntu-latest`).
+2. Compilar el código fuente sin errores.
+3. Ejecutar de forma automatizada la suite de pruebas unitarias ante cada `push` o pull request en la rama.
+
+---
+
+ ```
+CitasApp (Solución)
+├── CitasApp.Domain         # Núcleo — entidades, interfaces de puertos y ICitaObserver
+├── CitasApp.Infrastructure # Adaptadores — JSON / CSV / SQLite + Factory + Observers + Decorator
+├── CitasApp.Application    # Casos de uso y lógica de aplicación
+├── CitasApp.Tests          # Pruebas unitarias con xUnit
+├── CitasApp (Web)          # Presentación MVC — controladores, vistas, DI
+└── CitasApp.Api            # API REST — controladores ControllerBase, endpoints HTTP
+ ```
+
 ## Patrones GoF implementados
  
 ### Factory Method — `RepositoryFactory`
@@ -73,7 +95,10 @@ CitasApp.Api ──────────────► CitasApp.Domain
 ## Estructura del proyecto
  
 ```
-ArqSoft-S05-Giovana-GOF/
+CitasApp/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                    ← Pipeline de Integración Continua
 ├── CitasApp.Domain/
 │   ├── Interfaces/
 │   │   ├── ICitaObserver.cs
@@ -89,32 +114,23 @@ ArqSoft-S05-Giovana-GOF/
 │   │   ├── EmailObserver.cs
 │   │   └── SmsObserver.cs
 │   └── Repositories/
-│       ├── RepositoryFactory.cs         ← Factory Method
+│       ├── RepositoryFactory.cs        ← Factory Method
 │       ├── LoggingPacienteRepository.cs ← Decorator
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       ├── JsonPacienteRepository.cs
-│       ├── CsvCitaRepository.cs
-│       ├── CsvMedicoRepository.cs
-│       ├── CsvPacienteRepository.cs
-│       ├── SqliteCitaRepository.cs
-│       ├── SqliteMedicoRepository.cs
-│       └── SqlitePacienteRepository.cs
+│       └── [Adaptadores JSON/CSV/SQLite]
 ├── CitasApp.Application/
 │   └── Service/
 │       ├── CitaService.cs
 │       ├── MedicoService.cs
 │       └── PacienteService.cs
+├── CitasApp.Tests/                   ← Proyecto de pruebas unitarias (xUnit)
+│   └── [Clases de prueba]
 ├── CitasApp/ (Web)
 │   ├── Controllers/
 │   ├── Views/
 │   └── Program.cs
 └── CitasApp.Api/
-    ├── Controllers/
-    │   ├── CitasController.cs
-    │   ├── MedicosController.cs
-    │   └── PacientesController.cs
-    └── Program.cs
+├── Controllers/
+└── Program.cs
 ```
 
 ## Cómo ejecutar
