@@ -1,4 +1,4 @@
-# CitasApp
+# CitasApp 
 
 Aplicación web de gestión de citas médicas construida con ASP.NET Core MVC (.NET 10). Permite administrar pacientes, médicos y citas a través de una interfaz web, con persistencia en archivos JSON (sin base de datos).
 
